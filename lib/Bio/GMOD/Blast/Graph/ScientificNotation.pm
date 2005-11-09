@@ -9,6 +9,7 @@ package Bio::GMOD::Blast::Graph::ScientificNotation;
 #-----------------------------------------------------------------
 
 use Carp;
+
 use Bio::GMOD::Blast::Graph::MyDebug qw( dmsg debugP );
 
 my( $kZero ) = '0.0e0';
@@ -307,6 +308,7 @@ sub negativeP
     return( $negP );
 }
 
+
 sub numberP
 {
     my( $str ) = shift;
@@ -318,15 +320,19 @@ sub numberP
 
     if( !defined( $str ) )
     {
-	confess( "undef value not allowed" );
+        confess( "undef value not allowed" );
+    }
+    elsif( $str !~ m/[^\s]+/ )
+    {
+        $numP = 0;
     }
     elsif( $str =~ m/$kNotAllowedGlyphsRegexp/ )
     {
-	$numP = 0;
+        $numP = 0;
     }
     else
     {
-	$numP = 1;
+        $numP = 1;
     }
 
     return( $numP );
