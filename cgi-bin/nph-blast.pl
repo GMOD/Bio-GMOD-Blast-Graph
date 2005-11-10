@@ -23,16 +23,16 @@ use Bio::SearchIO::Writer::HTMLResultWriter;
 use Bio::GMOD::Blast::Graph;
 use Bio::GMOD::Blast::Util;
 
-## Change this variable to point to your own location and name 
-## of the configuration file
-my $CONF_FILE = "/share/yeast/www-data/conf/Blast.conf";
+## Change this variable to point to your own location and the name 
+## for the configuration file
+my $CONF_FILE = '/share/dough/www-data_sgd/conf/Blast_gmod.conf';
 
 ########################################################################
 select(stdout); 
 $| = 1;  # to prevent buffering problems
 ########################################################################
 
-my $title = "BLAST Search";
+my $title = 'BLAST Search';
 
 
 ########################################################################
@@ -41,7 +41,7 @@ my ($datasetDir, $seqtmp, $sequence, $program, $dataset, $options,
 
 my (@program, %programLabel, %programType, @db, %dbLabel, %dbType, @matrix);
 
-my ($blastBinDir, $blastOutputFile);
+my ($blastBinDir, $blatBinDir, $blastOutputFile, %port, %host);
 
 my ($imageDir, $imageUrl);
 
@@ -111,20 +111,66 @@ sub checkArgsAndDoSearch {
 sub runBlast {
 ####################################################################
 
-    if ($filtering) {
+    unless ($program =~ /^blat/i) {
 
-	open(OUT, ">$blastOutputFile") ||
-	    die "Can't open '$blastOutputFile' for writing:$!";
+	if ($filtering) {
 
-	print OUT "Filtering On\n";
+	    open(OUT, ">$blastOutputFile") ||
+		die "Can't open '$blastOutputFile' for writing:$!";
+
+	    print OUT "Filtering On\n";
 	
-	close(OUT);
+	    close(OUT);
+
+	}
 
     }
 
-    $program = $blastBinDir.$program;
+    my $cmd;
+
+    if ($program =~ /^(blat|tblat)/i) {
+
+	my $port = $port{$program}{$dataset};
+
+	my $host = $host{$program}{$dataset};
+
+	if ($program =~ /^blat/i) {
+
+	    $cmd = "$blatBinDir/gfClient $host $port / $seqtmp -out=blast $blastOutputFile >> /dev/null 2>&1";
+	
+	}
+	else {
+
+	    $cmd = "$blatBinDir/gfClient $host $port / $seqtmp -out=blast -q=prot -t=dnax $blastOutputFile >> /dev/null 2>&1"
+
+	}
+
+
+    }
+    else {
+
+	$program = $blastBinDir.$program;
   
-    system("$program $dataset $seqtmp $options -cpus=2 -progress=20 >> $blastOutputFile 2>&1");
+	$cmd = "$program $dataset $seqtmp $options -cpus=2 -progress=20 >> $blastOutputFile 2>&1";
+
+    }
+
+    my $err = system($cmd);
+
+    if ($err) {
+
+	print "Error occurred when running BLAST/BLAT program. See the following message:", p;
+
+	print '<pre>';
+
+	system("/usr/bin/cat $blastOutputFile");
+
+	print '</pre>';
+
+	exit;
+
+    }
+   
 
 }
 
@@ -132,14 +178,15 @@ sub runBlast {
 sub showGraph {
 ####################################################################
 
-    my $graph = 
-      Bio::GMOD::Blast::Graph->new(-outputfile=>$blastOutputFile,
-				   -dstDir=>$imageDir,
-				   -dstURL=>$imageUrl);
+   my $graph = 
+	  Bio::GMOD::Blast::Graph->new(-outputfile=>$blastOutputFile,
+				       -dstDir=>$imageDir,
+				       -dstURL=>$imageUrl);
 			       
 
     $graph->showGraph;
 
+  
 }
 
 ####################################################################
@@ -218,7 +265,7 @@ sub blastSearchBox {
 		     -columns=>'80',
 		     -rows=>'5',
 		     -value=>"\n$sequence").p."\n".
-	    b("Choose the Appropriate BLAST Program:").br.
+	    b("Choose the Appropriate Search Program:").br.
 	    popup_menu(-name=>'program',
 		       -values=>\@program,
 		       -labels=>\%programLabel).p."\n".
@@ -396,6 +443,20 @@ sub setVariables {
 	elsif ($name =~ /^blastBinDir/i) {
 
 	    $blastBinDir = $value;
+
+	}
+	elsif ($name =~ /^blatBinDir/i) {
+
+	    $blatBinDir = $value;
+
+	}
+	elsif ($name =~ /^port/i) {
+
+	    my ($port, $host, $program, $dataset) = split(/=>/, $value);
+
+	    $port{$program}{$dataset} = $port;
+
+	    $host{$program}{$dataset} = $host;
 
 	}
 	elsif ($name =~ /^program/i) {
@@ -576,6 +637,8 @@ sub checkEmail {
 sub setOptions {
 ####################################################################
     
+    return if ($program =~ /blat/i);
+
     $options = &blastOptions($program, length($sequence));
 
     if (param('sortop') && param('sortop') ne "pvalue") { 
@@ -637,6 +700,8 @@ sub setOptions {
 sub blastOptions {
 #######################################################################
     my ($program, $seqlen) = @_;
+
+    return if ($program =~ /^blat/i);
 
     my $hspmax;
     my $gapmax;
@@ -749,6 +814,13 @@ sub printStartPage {
     print start_html(-title=>$title);
 
     print center(h2($title)), hr;
+
+    if (param('program') =~ /^(blat|tblatn)$/i) {
+
+ 	print center('If there are no hits found using BLAT/TBLATN'.br.'the remainder of this page will be blank.'), hr({-width=>'20%'});
+
+    }
+
 
     
 }
