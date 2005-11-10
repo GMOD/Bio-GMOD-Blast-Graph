@@ -8,6 +8,9 @@ the Generic Model Organism Systems Database project (GMOD.sourceforge.net).
  - To download the Washington University BLAST(WU-BLAST), 
    go to http://blast.wustl.edu/
 
+ - To download the BLAT programs, 
+   go to http://www.genomeblat.com/genomeblat/
+
  - To download the NCBI BLAST programs, 
    go to http://www.ncbi.nlm.nih.gov/BLAST/
  
@@ -15,12 +18,12 @@ the Generic Model Organism Systems Database project (GMOD.sourceforge.net).
    ftp://genome-ftp.stanford.edu/pub/people/programmer/gmod/
 
  - This graphic module will support BLASTN, BLASTP, BLASTX, TBLASTX, 
-   and TBLASTN. For the databases, it will support any fasta-
+   TBLASTN, BLAT, and TBLATN. For the databases, it will support any fasta-
    formated datasets (i.e., nr, nt, etc). 
 
  - The cgi program (nph-blast.pl) included in this
-   distribution is used to display a BLAST search form and 
-   search result for WU-BLAST. It can be copied into any directory 
+   distribution is used to display a BLAST/BLAT search form and 
+   search result for WU-BLAST or BLAT. It can be copied into any directory 
    under your cgi-bin. You can update the $CONF_FILE variable 
    in the top of this script to point to your own location of 
    the configuration file.
@@ -68,7 +71,7 @@ the Generic Model Organism Systems Database project (GMOD.sourceforge.net).
 		Bio::SearchIO::Writer::HTMLResultWriter
 	
 
-This is a free software.  You can use it under the same terms as Perl
+This is a free software. You can use it under the same terms as Perl
 itself. Please see DISCLAIMER for limitations ...
  	
 Support is available from the discussion groups and mailing lists at
