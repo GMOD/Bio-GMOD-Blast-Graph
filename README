@@ -25,7 +25,7 @@ the Generic Model Organism Systems Database project (www.gmod.org).
 
 - The cgi program (nph-blast.pl) included in this
    distribution is used to display a BLAST/BLAT search form and 
-   search result for WU-BLAST or BLAT. It can be copied into any directory 
+   search result for BLAST or BLAT. It can be copied into any directory 
    under your cgi-bin. You can update the $CONF_FILE variable 
    in the top of this script to point to your own location of 
    the configuration file.
