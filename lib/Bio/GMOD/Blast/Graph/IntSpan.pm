@@ -1,11 +1,8 @@
-
-# Copyright (c) 1996 Steven McDougall.  All rights reserved.  This
-# module is free software; you can redistribute it and/or modify it
-# under the same terms as Perl itself.
-
-# $Id: IntSpan.pm,v 1.1.1.1 2005-11-09 18:20:47 scottcain Exp $
-
+# $Id: IntSpan.pm,v 1.2 2007-02-07 17:52:39 briano Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.1.1.1  2005/11/09 18:20:47  scottcain
+# initial import
+#
 # Revision 1.2  2003/08/28 22:27:16  shuai
 # *** empty log message ***
 #
@@ -27,7 +24,14 @@
 # added $Bio::GMOD::Blast::Graph::IntSpan::Empty_String
 # made IntSpan an Exporter
 # documentation fixes
-#
+=head1 COPYRIGHT
+
+Copyright (c) 1996 Steven McDougall.  All rights reserved.  This
+
+Module is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
 
 package Bio::GMOD::Blast::Graph::IntSpan;
 $Bio::GMOD::Blast::Graph::IntSpan::VERSION = 1.03;
@@ -131,7 +135,8 @@ removes all elements from $set.
 
 =head2 Object reference
 
-If an object reference is given, it is taken to be a Bio::GMOD::Blast::Graph::IntSpan object.
+If an object reference is given, it is taken to be a 
+Bio::GMOD::Blast::Graph::IntSpan object.
 
 =head2 Array reference
 
@@ -151,9 +156,9 @@ The set is the union of all the runs.
 
 Runs may be written in any of several forms.
 
-=over 8
-
 =head2 Finite forms
+
+=over 2
 
 =item n
 
@@ -167,7 +172,7 @@ Runs may be written in any of several forms.
 
 =head2 Infinite forms
 
-=over 8
+=over 3
 
 =item (-n
 
@@ -199,21 +204,21 @@ Other characters are not allowed.
 
 =head2 Examples
 
-=over 15
+=over 7
 
 =item -
 
 { }
 
-=item 1
+=item '1'
 
 { 1 }
 
-=item 1-2
+=item '1-2'
 
 { 1, 2 }
 
-=item -5--1
+=item '-5--1'
 
 { -5, -4, -3, -2, -1 }
 
@@ -221,11 +226,11 @@ Other characters are not allowed.
 
 the integers
 
-=item (--1
+=item '(--1'
 
 the negative integers
 
-=item 1-3, 4, 18-21
+=item '1-3, 4, 18-21'
 
 { 1, 2, 3, 4, 18, 19, 20, 21 }
 
