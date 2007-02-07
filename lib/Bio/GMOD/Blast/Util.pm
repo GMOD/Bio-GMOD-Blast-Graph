@@ -1,9 +1,15 @@
 package Bio::GMOD::Blast::Util;
-#######################################################################
-# Author:           Shuai Weng  <shuai@genome.stanford.edu>
-# Date:             May 2003
-# 
-#
+
+=head1 NAME
+
+Shuai Weng  <shuai@genome.stanford.edu>
+
+=head1 DATE             
+
+May 2003
+
+=cut
+
 #######################################################################
 use strict;
 

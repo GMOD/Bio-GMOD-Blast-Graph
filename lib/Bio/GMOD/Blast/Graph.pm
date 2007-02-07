@@ -1,13 +1,4 @@
 package Bio::GMOD::Blast::Graph;
-#####################################################################
-#
-# Originally created by John Slenk <jces@genome.stanford.edu>
-#
-# Rewritten and cared for by Shuai Weng <shuai@genome.stanford.edu>
-#
-# You may distribute this module under the same terms as perl itself
-#-----------------------------------------------------------------
-=pod
 
 =head1 NAME
 
@@ -21,6 +12,9 @@ Bio::GMOD::Blast::Graph
 
 This package provides methods for graphically displaying the BLAST search result. 
 
+Originally created by John Slenk <jces@genome.stanford.edu>.
+
+Rewritten and cared for by Shuai Weng <shuai@genome.stanford.edu>.
 
 =head1 FEEDBACK
 
@@ -39,7 +33,6 @@ John Slenk, jces@genome.stanford.edu
 =head1 APPENDIX
 
 The rest of the documentation details each of the public methods.
- 
 
 =head1 PUBLIC METHODS
 
@@ -96,6 +89,7 @@ Usage :
                                    -dstURL=>$imageUrl);
 
 =cut
+
 ##################################################################
     my ($class, @args) = @_;
     
@@ -167,7 +161,7 @@ This method returns the array ref for the hit names.
 
 Usage:
 
-    
+
     my $hitArrayRef = $graph->hitNameArrayRef;
 
     foreach my $hitName (@$hitArrayRef) {
