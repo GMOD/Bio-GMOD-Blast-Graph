@@ -1,75 +1,34 @@
 The BLAST Graphic Viewer provides a graphical visualization of the regions 
 contained within HSPs relative to the query sequence. This distribution 
 includes sample databases and a BLAST Search form. It is a component of 
-the Generic Model Organism Systems Database project (GMOD.sourceforge.net).
+the Generic Model Organism Systems Database project (www.gmod.org).
 
- - For a demo, go to http://seq.yeastgenome.org/cgi-bin/GMOD/nph-blast.pl
+- To install see the INSTALL file
+
+- For a demo, go to http://seq.yeastgenome.org/cgi-bin/GMOD/nph-blast.pl
  
- - To download the Washington University BLAST(WU-BLAST), 
+- To download the Washington University BLAST(WU-BLAST), 
    go to http://blast.wustl.edu/
 
- - To download the BLAT programs, 
+- To download the BLAT programs, 
    go to http://www.genomeblat.com/genomeblat/
 
- - To download the NCBI BLAST programs, 
+- To download the NCBI BLAST programs, 
    go to http://www.ncbi.nlm.nih.gov/BLAST/
  
- - To download the sample databases, go to 
+- To download the sample databases, go to 
    ftp://genome-ftp.stanford.edu/pub/people/programmer/gmod/
 
- - This graphic module will support BLASTN, BLASTP, BLASTX, TBLASTX, 
+- This graphic module will support BLASTN, BLASTP, BLASTX, TBLASTX, 
    TBLASTN, BLAT, and TBLATN. For the databases, it will support any fasta-
    formated datasets (i.e., nr, nt, etc). 
 
- - The cgi program (nph-blast.pl) included in this
+- The cgi program (nph-blast.pl) included in this
    distribution is used to display a BLAST/BLAT search form and 
    search result for WU-BLAST or BLAT. It can be copied into any directory 
    under your cgi-bin. You can update the $CONF_FILE variable 
    in the top of this script to point to your own location of 
    the configuration file.
-
- - To set your own locations for blast programs, databases, filters,
-   and matrix, and tmp directory for storing the png file, please 
-   see the configuration file (conf/Blast.conf). You can copy this 
-   file (Blast.conf) into any world readable directories.
-
- - To install this module on your own system, issue the following commands:
-
-   perl Makefile.PL
-   make
-   make install   
-
- - Prerequisites: this module runs on top of several software packages. 
-   These packages must be installed before you can run this viewer. 
-
-	A)  	Apache Web Server -- http://www.apache.org
-        		The Apache web server is the industry 
-			standard open source
-        		web server for Unix and Windows systems.
-
-  	B) 	Perl 5.005 or higher-- http://www.cpan.org
-        		The Perl language is widely used for web 
-			applications.
-        	
-  	C)	Standard Perl modules -- http://www.cpan.org
-        		The following Perl modules must be installed 
-			for the Blast Graphic Viewer to work.
-        		They can be found on CPAN:
-
-		File::Listing
-		File::Basename
-		GD
-		CGI
-		
-
-	D)	Bioperl modules --  http://www.bioperl.org
-        		The following Bioperl modules must be installed
-			for this viewer to work.	
-	
-		Bio::Root::IO
-		Bio::SearchIO
-		Bio::SearchIO::Writer::HTMLResultWriter
-	
 
 This is a free software. You can use it under the same terms as Perl
 itself. Please see DISCLAIMER for limitations ...
