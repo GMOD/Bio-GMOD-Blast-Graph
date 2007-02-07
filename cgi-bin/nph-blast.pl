@@ -1,17 +1,23 @@
 #!/usr/bin/perl
-########################################################################
-# Script name  :    nph-blast.pl
-#
-# Date created :    August 2003
-#
-# Author       :    Shuai Weng <shuai@genome.stanford.edu>
-# 
-# This script is a simple client interface for displaying the blast 
-# search form, running the blast search, and generating the search 
-# result. 
-#
-# 
-########################################################################
+=head1 NAME nph-blast.pl
+
+=head1 CREATED 
+
+August 2003
+
+=head1 AUTHOR 
+
+Shuai Weng
+shuai@genome.stanford.edu
+
+=head1 DESCRIPTION
+
+This script is a simple client interface for displaying the blast 
+search form, running the blast search, and generating the search 
+result. 
+
+=cut
+
 use strict;
 
 use CGI qw/:all/;
@@ -838,22 +844,6 @@ sub printStartPage {
 # }
 
 ####################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
