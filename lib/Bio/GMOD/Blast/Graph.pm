@@ -15,6 +15,8 @@ use Bio::SearchIO;
 use GD;
 use CGI qw/:all/;
 
+use File::Spec;
+
 use Bio::GMOD::Blast::Graph::IntSpan;
 use Bio::GMOD::Blast::Graph::MyDebug qw( dmsg dmsgs assert );
 use Bio::GMOD::Blast::Graph::MyMath qw( round max );
@@ -402,23 +404,16 @@ sub _writeImage {
 
     my ($self) = @_;
 
-    unless(open(IMAGEOUT, ">".$self->{'_dstDir'}.$self->{'_imgName'})){
-
-    die ("couldn't write to ".$self->{'_dstDir'}.$self->{'_imgName'});
-
-    }
+    my $img_path = File::Spec->catfile( $self->{'_dstDir'}, $self->{'_imgName'} );
+    open my $img, '>', $img_path
+        or die "$! writing $img_path";
 
     if ($self->{'_img'}->can('png')) {
-
-    print IMAGEOUT $self->{'_img'}->png;
-
+        print $img $self->{'_img'}->png;
     }
     else {
-
-    print IMAGEOUT $self->{'_img'}->gif;
-
+        print $img $self->{'_img'}->gif;
     }
-    close IMAGEOUT;
 
 }
 
