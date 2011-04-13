@@ -26,9 +26,9 @@ sub checkLoad {
 
     if ($load[0] =~ / load average: ([0-9\.]+), / ) {
 
-	if ($1 > $maxLoad) { return 1; }
+    if ($1 > $maxLoad) { return 1; }
 
-	return;
+    return;
 
     }
 
@@ -53,35 +53,35 @@ sub loadWait {
 
     while ($loadwait) {
 
-	if ( !$self->checkLoad($maxLoad) ) {
+    if ( !$self->checkLoad($maxLoad) ) {
 
-	    last;
+        last;
 
-	} 
+    } 
        
-	if ( $loadfirst ) {
+    if ( $loadfirst ) {
 
-	    print "Please wait... The load on the server is too high. Your request will start once the load drops.<p>\n";
+        print "Please wait... The load on the server is too high. Your request will start once the load drops.<p>\n";
 
-	    print "<b>You can return to the form and use the email option to have the result, or the URL of the result, emailed to you.</b><p>\n";
+        print "<b>You can return to the form and use the email option to have the result, or the URL of the result, emailed to you.</b><p>\n";
 
-	    $loadfirst = 0;
+        $loadfirst = 0;
 
-	    open (loadlog, ">>$loadlog") or warn "could not open loadlog\n";
+        open (loadlog, ">>$loadlog") or warn "could not open loadlog\n";
 
-	    print loadlog "$thetime $remotehost ".(caller(1))[1]."\n";
+        print loadlog "$thetime $remotehost ".(caller(1))[1]."\n";
 
-	    close (loadlog);
+        close (loadlog);
 
-	} 
-	else {
+    } 
+    else {
 
-	    print "waiting... <br>\n";
+        print "waiting... <br>\n";
 
-	    sleep 10;
+        sleep 10;
 
-	}
-	
+    }
+    
     }
 
 }
@@ -106,44 +106,44 @@ sub queueWait {
 
     while($queuewait) {
 
-	my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, 
-	    $atime, $mtime, $ctime, $blksize, $blocks) 
-	    = stat "$lockfile";
+    my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size, 
+        $atime, $mtime, $ctime, $blksize, $blocks) 
+        = stat "$lockfile";
 
-	if (!$atime) {
+    if (!$atime) {
 
-	    open(QUEUE, ">$lockfile") or warn "could not open lockfile\n";
+        open(QUEUE, ">$lockfile") or warn "could not open lockfile\n";
 
-	    print QUEUE "$queueDesc\n";
+        print QUEUE "$queueDesc\n";
 
-	    close(QUEUE);
+        close(QUEUE);
 
-	    $queuewait = 0;
+        $queuewait = 0;
 
-	} 
-	else {
+    } 
+    else {
 
-	    if ( $waitfirst ) {
+        if ( $waitfirst ) {
 
-		print "Please wait... Another BLAST, FASTA, or PatMatch search is currently being processed for a computer at your institution.<p>\n";
+        print "Please wait... Another BLAST, FASTA, or PatMatch search is currently being processed for a computer at your institution.<p>\n";
 
-		print "<b>You can return to the form and use the email option to have the result, or the URL of the result, emailed to you.</b><p>\n";
+        print "<b>You can return to the form and use the email option to have the result, or the URL of the result, emailed to you.</b><p>\n";
 
-		$waitfirst = 0;
+        $waitfirst = 0;
 
-		open (queuelog, ">>$queuelog") or warn "could not open queuelog\n";
-		print queuelog "$thetime $remotehost ".(caller(1))[1]."\n";
+        open (queuelog, ">>$queuelog") or warn "could not open queuelog\n";
+        print queuelog "$thetime $remotehost ".(caller(1))[1]."\n";
 
-		close (queuelog);
+        close (queuelog);
 
-	    } 
-	    else {
-		
-		print "waiting... <br>\n";
-	    
-	    }
-	    sleep 10;
-	}
+        } 
+        else {
+        
+        print "waiting... <br>\n";
+        
+        }
+        sleep 10;
+    }
     }
 
     return $lockfile;
@@ -158,14 +158,14 @@ sub theTime {
     my ($self) = @_;
 
     my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) 
-	= localtime(time);
+    = localtime(time);
     
     # convert to current year and remove the century
     $year = ($year + 1900) % 1000;
 
     my $thetime = sprintf ("%2d/%2d/%2d:%2d:%2d:%2d", 
-			   $mday, $mon+1, $year, 
-			   $hour, $min, $sec);
+               $mday, $mon+1, $year, 
+               $hour, $min, $sec);
 
     $thetime =~ s/ /0/g;
 
@@ -231,15 +231,15 @@ sub createTmpSeqFile {
     if (!$sequence) { return; }
 
     open(SEQTMP, ">$tmpfile") || 
-	die "Can't create tmp seqfile $tmpfile:$!";
+    die "Can't create tmp seqfile $tmpfile:$!";
 
     print SEQTMP ">$seqname\n";
 
     while(length($sequence) > $lineWidth) { 
 
-	print SEQTMP substr($sequence, 0, $lineWidth), "\n";
+    print SEQTMP substr($sequence, 0, $lineWidth), "\n";
 
-	$sequence = substr($sequence, $lineWidth, length($sequence));
+    $sequence = substr($sequence, $lineWidth, length($sequence));
 
     }
     print SEQTMP $sequence , "\n";
@@ -260,18 +260,18 @@ sub validateEmail {
     if ( !$username || !$hostname) { return; }
 
     open(hostchk, "/tools/net/bin/host $hostname|") or 
-	warn "could not open hostchk";
+    warn "could not open hostchk";
 
     my $hostvalid;
 
     while (<hostchk>) {
 
-	if ( /.*\tA\t.*/ || /.*\tMX\t.*/ ) {
+    if ( /.*\tA\t.*/ || /.*\tMX\t.*/ ) {
 
-	    $hostvalid++;
-	
-	}
-	
+        $hostvalid++;
+    
+    }
+    
     }
     close(hostchk);
 
@@ -291,11 +291,11 @@ sub writeLog {
     my $thetime = $self->theTime;
 
     open(LOG, ">>$logfile") || 
-	warn "Could not open blastlog file '$logfile':$!\n";
-	
+    warn "Could not open blastlog file '$logfile':$!\n";
+    
     printf(LOG "%s [%s] \"%s_sc %s%s\" u:%1.2f s:%1.2f len=%d %s\n", 
-	   $remotehost, $thetime, $program, $dataset, $options,
-	   $Cuser, $Csystem, $seqlen, $remotelink);
+       $remotehost, $thetime, $program, $dataset, $options,
+       $Cuser, $Csystem, $seqlen, $remotelink);
 
     close(LOG);
 
@@ -313,35 +313,35 @@ sub blastOptions {
 
     if ( $seqlen < 10000 ) {
 
-	if ($program eq "blastn") {
+    if ($program eq "blastn") {
 
-	    $hspmax = 6000;
+        $hspmax = 6000;
 
-	    $gapmax = 3000;
+        $gapmax = 3000;
 
-	} 
-	else {
-
-	    $hspmax = 2000;
-
-	    $gapmax = 1000;
-
-	}
     } 
     else {
 
-	$hspmax = 10000;
+        $hspmax = 2000;
 
-	if ($program eq "blastn") {
+        $gapmax = 1000;
 
-	    $gapmax = 3000;
+    }
+    } 
+    else {
 
-	} 
+    $hspmax = 10000;
 
-	else {
+    if ($program eq "blastn") {
 
-	    $gapmax = 1000;
-	}
+        $gapmax = 3000;
+
+    } 
+
+    else {
+
+        $gapmax = 1000;
+    }
     }
 
     return " -hspsepsmax=" . $hspmax . " -hspsepqmax=" . $hspmax . " -gapsepsmax=" . $gapmax . " -gapsepqmax=" . $gapmax . " ";

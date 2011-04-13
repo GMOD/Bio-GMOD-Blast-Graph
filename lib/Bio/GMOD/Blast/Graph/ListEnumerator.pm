@@ -59,7 +59,7 @@ sub previousIndex {
     # we don't want anything in the list.
     if( $dex > -1 )
     {
-	$dex--;
+    $dex--;
     }
 
     $self->putIndex( $dex );
@@ -82,7 +82,7 @@ sub nextIndex {
     # which signifies there are no more elements.
     if( $dex <= $maxDex )
     {
-	$self->putIndex( ++$dex );
+    $self->putIndex( ++$dex );
     }
 
     #dmsg( "nextIndex(): after =", $self->getIndex() );
@@ -104,7 +104,7 @@ sub getCurrentElement {
 
     if( $dex <= $maxDex )
     {
-	$elem = $self->getList()->getElementAt( $dex );
+    $elem = $self->getList()->getElementAt( $dex );
     }
 
     return( $elem );

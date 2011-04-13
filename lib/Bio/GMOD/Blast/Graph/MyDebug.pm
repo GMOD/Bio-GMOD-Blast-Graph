@@ -38,7 +38,7 @@ sub dmsg
     
     if( !defined($flag) || $flag != 0 )
     {
-	print STDERR "[$pkg $line]", join( " ", @msg ), "\n";
+    print STDERR "[$pkg $line]", join( " ", @msg ), "\n";
     }
 }
 
@@ -54,7 +54,7 @@ sub dmsgs
     
     if( !defined($flag) || $flag != 0 )
     {
-	print STDERR "[$pkg $line]", join( ", ", @msg ), "\n";
+    print STDERR "[$pkg $line]", join( ", ", @msg ), "\n";
     }
 }
 
@@ -64,7 +64,7 @@ sub assert
 
     if( ! $val )
     {
-	confess( "[" . join( " ", @msg ) . "]" );
+    confess( "[" . join( " ", @msg ) . "]" );
     }
 }
 

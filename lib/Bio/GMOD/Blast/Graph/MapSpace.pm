@@ -29,10 +29,10 @@ sub init {
     my( $self ) = shift;
 
     $self->{ $kInitialSpace } =
-	$self->{ $kSpaceRemaining } =
-	    ($Bio::GMOD::Blast::Graph::MapDefs::imgHeight -
-	     $Bio::GMOD::Blast::Graph::MapDefs::hspPosInit -
-	     $Bio::GMOD::Blast::Graph::MapDefs::imgBottomBorder );
+    $self->{ $kSpaceRemaining } =
+        ($Bio::GMOD::Blast::Graph::MapDefs::imgHeight -
+         $Bio::GMOD::Blast::Graph::MapDefs::hspPosInit -
+         $Bio::GMOD::Blast::Graph::MapDefs::imgBottomBorder );
 
     #dmsg( "init(): space = ", $self->getSpaceRemaining() );
 }
@@ -87,13 +87,13 @@ sub wrapperFitsP {
     $wheight = $wrap->getHSPLineCount() * $Bio::GMOD::Blast::Graph::MapDefs::hspHeight;
     if( $wheight <= $space )
     {
-	$fitsP = 1;
-	#dmsg( "wrapperFitsP(): $wheight <= $space" );
+    $fitsP = 1;
+    #dmsg( "wrapperFitsP(): $wheight <= $space" );
     }
     else
     {
-	$fitsP = 0;
-	#dmsg( "wrapperFitsP(): $wheight > $space" );
+    $fitsP = 0;
+    #dmsg( "wrapperFitsP(): $wheight > $space" );
     }
 
     $self->{ $kFullP } = (! $fitsP);

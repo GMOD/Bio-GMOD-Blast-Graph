@@ -76,14 +76,14 @@ sub addRegion {
     $bucket = $self->findNonIntersectingBucket( $region );
     if( defined($bucket) )
     {
-	#dmsg( "addRegion(): adding " . $region->run_list() . " to bucket = " . $bucket->toString() );
-	$bucket->addRegion( $region );
+    #dmsg( "addRegion(): adding " . $region->run_list() . " to bucket = " . $bucket->toString() );
+    $bucket->addRegion( $region );
     }
     else
     {
-	#dmsg( "addRegion(): no good bucket, creating " . $region->run_list() );
-	$bucket = new Bio::GMOD::Blast::Graph::Bucket( $region );
-	$self->addBucket( $bucket );
+    #dmsg( "addRegion(): no good bucket, creating " . $region->run_list() );
+    $bucket = new Bio::GMOD::Blast::Graph::Bucket( $region );
+    $self->addBucket( $bucket );
     }
 }
 
@@ -102,17 +102,17 @@ sub findNonIntersectingBucket {
     #dmsg( "findNonIntersectingBucket(): region = " . $region->run_list() );
 
     for( $dex = 0;
-	 $dex < $bucketList->getCount() && !$foundP;
-	 $dex++ )
+     $dex < $bucketList->getCount() && !$foundP;
+     $dex++ )
     {
-	$testBucket = $bucketList->getElementAt( $dex );
-	#dmsg( "findNonIntersectingBucket(): test = " . $testBucket->toString() );
+    $testBucket = $bucketList->getElementAt( $dex );
+    #dmsg( "findNonIntersectingBucket(): test = " . $testBucket->toString() );
 
-	if( $testBucket->disjointP( $region ) )
-	{
-	    $match = $testBucket;
-	    $foundP = 1;
-	}
+    if( $testBucket->disjointP( $region ) )
+    {
+        $match = $testBucket;
+        $foundP = 1;
+    }
     }
 
     return( $match );

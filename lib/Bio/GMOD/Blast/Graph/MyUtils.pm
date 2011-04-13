@@ -26,8 +26,8 @@ sub makeVariableName {
     $varName .= "__";
     foreach $name ( @names )
     {
-	$name =~ tr/a-z/A-Z/;
-	$varName .= "_$name";
+    $name =~ tr/a-z/A-Z/;
+    $varName .= "_$name";
     }
     $varName .= "_VARIABLE__";
 
@@ -57,7 +57,7 @@ sub parseNumber {
 
     if( $data =~ m/\s*([\d\.]+)\s*/ )
     {
-	$data = $1; # extract numbers from strings.
+    $data = $1; # extract numbers from strings.
     }
 
     return( $data );
@@ -81,12 +81,12 @@ sub updateBoundRef {
 
     if( !defined( $$ref ) )
     {
-	#dmsg( "updateBoundRef", "setting $ref to $value" );
-	$$ref = $value;
+    #dmsg( "updateBoundRef", "setting $ref to $value" );
+    $$ref = $value;
     }
     elsif( &{$cmpSub}( $ref, $value ) )
     {
-	$$ref = $value;
+    $$ref = $value;
     }
 }
 
@@ -126,12 +126,12 @@ sub getArgOrParam {
 
     if( $dex < scalar(@args) )
     {
-	$value = $args[ $dex ];
+    $value = $args[ $dex ];
     }
 
     if( !defined( $value ) )
     {
-	$value = $param;
+    $value = $param;
     }
 
     return( $value );
@@ -147,7 +147,7 @@ sub getArgOrDie {
 
     if( !defined( $value ) )
     {
-	die( $msg );
+    die( $msg );
     }
 
     return( $value );

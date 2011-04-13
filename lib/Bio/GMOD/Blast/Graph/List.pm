@@ -32,21 +32,21 @@ sub init {
 #    if( defined( @ref ) )
     if( @ref )
     {
-	if( ref( $ref[0] ) eq "ARRAY" )
-	{
-	    #dmsg( "got reference to array" );
-	    $self->{ $kElements } = $ref[0];
-	}
-	elsif( !ref( $ref[0] ) )
-	{
-	    #dmsg( "got array itself" );
-	    $self->{ $kElements } = \@ref;
-	}
+    if( ref( $ref[0] ) eq "ARRAY" )
+    {
+        #dmsg( "got reference to array" );
+        $self->{ $kElements } = $ref[0];
+    }
+    elsif( !ref( $ref[0] ) )
+    {
+        #dmsg( "got array itself" );
+        $self->{ $kElements } = \@ref;
+    }
     }
     else
     {
-	#dmsg( "no ref given at all" );
-	$self->{ $kElements } = [];
+    #dmsg( "no ref given at all" );
+    $self->{ $kElements } = [];
     }
 }
 
@@ -85,8 +85,8 @@ sub getElementAt {
 
     if( $dex <= $maxDex )
     {
-	$ref = $self->getElementsRef();
-	$elem = $ { $ref } [ $dex ];
+    $ref = $self->getElementsRef();
+    $elem = $ { $ref } [ $dex ];
     }
  
     return( $elem );
@@ -103,8 +103,8 @@ sub removeElement {
     $ref = $self->getElementsRef();
     for( $dex = 0; $dex < $self->getCount(); $dex++ )
     {
-	$test = $self->getElementAt( $dex );
-	last if( $test == $elem );
+    $test = $self->getElementAt( $dex );
+    last if( $test == $elem );
     }
 
     splice( @{$ref}, $dex, 1 );
@@ -129,11 +129,11 @@ sub shiftSafe {
 
     if( $self->emptyP() )
     {
-	$val = undef;
+    $val = undef;
     }
     else
     {
-	$val = $self->shift();
+    $val = $self->shift();
     }
 
     return( $val );
@@ -159,11 +159,11 @@ sub emptyP {
 
     if( $self->getCount() == 0 )
     {
-	$emptyP = 1;
+    $emptyP = 1;
     }
     else
     {
-	$emptyP = 0;
+    $emptyP = 0;
     }
 
     return( $emptyP );
@@ -198,12 +198,12 @@ sub truncateAt {
 
     if( $n < 0 )
     {
-	$self->putElementsRef( [] );
+    $self->putElementsRef( [] );
     }
     else
     {
-	$lref = $self->getElementsRef();
-	splice( @{$lref}, $n );
+    $lref = $self->getElementsRef();
+    splice( @{$lref}, $n );
     }
 }
 
@@ -221,8 +221,8 @@ sub toString {
     my( $str );
 
     $str = Bio::GMOD::Blast::Graph::MyUtils::makeDumpString($self, 
-						  $self->getCount, 
-						  @{$self->getElementsRef()});
+                          $self->getCount, 
+                          @{$self->getElementsRef()});
 
     return( $str );
 }

@@ -70,24 +70,24 @@ sub partitionWrappers
     my( $enum ) = $list->getEnumerator();
     while( defined( $wrap = $enum->getNextElement() ) )
     {
-	#dmsg( "partitionWrappers(): wrap = ", $wrap->toString() );
+    #dmsg( "partitionWrappers(): wrap = ", $wrap->toString() );
 
-	# the problem here is that we only look at the exponent.
-	# 1.0 and 0.0 are at opposite ends, yet they have the
-	# same exponent, namely zero, so 1.0 gets put into
-	# the wrong bucket. so rather than pass in only the exponent,
-	# i pass in the whole thing. this is a different meaning
-	# of the term 'value' than elsewhere.
-	$part = $self->getPartitionFromExtendedValue( $wrap->getP() );
+    # the problem here is that we only look at the exponent.
+    # 1.0 and 0.0 are at opposite ends, yet they have the
+    # same exponent, namely zero, so 1.0 gets put into
+    # the wrong bucket. so rather than pass in only the exponent,
+    # i pass in the whole thing. this is a different meaning
+    # of the term 'value' than elsewhere.
+    $part = $self->getPartitionFromExtendedValue( $wrap->getP() );
 
-	$part->addElement( $wrap );
+    $part->addElement( $wrap );
     }
 
     # now set the "before" counts.
     for( $dex = 0; $dex < $kNumberOfPartitions; $dex++ )
     {
-	$part = $self->getPartitionAt( $dex );
-	$self->addPartitionCountAt( $dex, $part->getCount() );
+    $part = $self->getPartitionAt( $dex );
+    $self->addPartitionCountAt( $dex, $part->getCount() );
     }
 }
 
@@ -173,10 +173,10 @@ sub reduce
 
     while( defined($list = $setEnum->getNextElement()) )
     {
-	$listEnum = $list->getEnumerator();
-	$key = $setEnum->getCurrentKey();
-	$listEnums{ $key } = $listEnum;
-	#dmsg( "reduce(): added $key $listEnum count=", $listEnum->getCount() );
+    $listEnum = $list->getEnumerator();
+    $key = $setEnum->getCurrentKey();
+    $listEnums{ $key } = $listEnum;
+    #dmsg( "reduce(): added $key $listEnum count=", $listEnum->getCount() );
     }
 
     my( $space ) = $self->{ $kSpace };
@@ -196,47 +196,47 @@ sub reduce
     # as they run out.
 
     for( @keys = sort keys( %listEnums );
-	 (scalar(@keys) > 0) && (!$space->getFullP());
-	 @keys = sort keys( %listEnums ) )
-    {	
-	# during one loop, stop if we run out of space.
+     (scalar(@keys) > 0) && (!$space->getFullP());
+     @keys = sort keys( %listEnums ) )
+    {    
+    # during one loop, stop if we run out of space.
 
-	#dmsg( "reduce(): #keys = ", scalar(@keys) );
+    #dmsg( "reduce(): #keys = ", scalar(@keys) );
 
-	for( $dex = 0;
-	     ($dex < scalar(@keys)) && (!$space->getFullP());
-	     $dex++ )
-	{
-	    #dmsg( " reduce(): dex = $dex, space =", $space->getSpaceRemaining() );
+    for( $dex = 0;
+         ($dex < scalar(@keys)) && (!$space->getFullP());
+         $dex++ )
+    {
+        #dmsg( " reduce(): dex = $dex, space =", $space->getSpaceRemaining() );
 
-	    # get the current list to read.
-	    $key = $keys[ $dex ];
-	    $listEnum = $listEnums{ $key };
-	    #dmsg( " reduce(): key=$key enum=$listEnum count=", $listEnum->getCount() );
+        # get the current list to read.
+        $key = $keys[ $dex ];
+        $listEnum = $listEnums{ $key };
+        #dmsg( " reduce(): key=$key enum=$listEnum count=", $listEnum->getCount() );
 
-	    # process it's current element.
-	    if( defined( $wrap = $listEnum->getNextElement() ) )
-	    {
-		#dmsg( " reduce(): wrap =", $wrap->toString() );
+        # process it's current element.
+        if( defined( $wrap = $listEnum->getNextElement() ) )
+        {
+        #dmsg( " reduce(): wrap =", $wrap->toString() );
 
-		if( ! $space->wrapperFitsP( $wrap ) )
-		{
-		    #dmsg( " reduce(): doesn't fit" );
-		    $listEnum->previousIndex();
-		    $space->putFullP( 1 );
-		}
-		else
-		{
-		    $space->updateFromWrapper( $wrap );
-		    #dmsg( " reduce(): does fit, added #", ++$debugCount, " from $key @ ", $listEnum->getIndex() );
-		}
-	    }
-	    else
-	    {
-		#dmsg( " reduce(): no more elements for key $key, removing" );
-		delete $listEnums{ $key }
-	    }
-	}
+        if( ! $space->wrapperFitsP( $wrap ) )
+        {
+            #dmsg( " reduce(): doesn't fit" );
+            $listEnum->previousIndex();
+            $space->putFullP( 1 );
+        }
+        else
+        {
+            $space->updateFromWrapper( $wrap );
+            #dmsg( " reduce(): does fit, added #", ++$debugCount, " from $key @ ", $listEnum->getIndex() );
+        }
+        }
+        else
+        {
+        #dmsg( " reduce(): no more elements for key $key, removing" );
+        delete $listEnums{ $key }
+        }
+    }
     }
 
     # if the lists have any elements left in them, shorten them.
@@ -244,22 +244,22 @@ sub reduce
     #dmsgs( "reduce(): final keys = ", @keys );
     foreach $key ( @keys )
     {
-	$listEnum = $listEnums{ $key };
-	$dex = $listEnum->getIndex();
+    $listEnum = $listEnums{ $key };
+    $dex = $listEnum->getIndex();
 
-	# the index is of the last element successfully added to the space.
-	#dmsg( "reduce(): $key $dex (max=", $listEnum->getCount(), ")" );
+    # the index is of the last element successfully added to the space.
+    #dmsg( "reduce(): $key $dex (max=", $listEnum->getCount(), ")" );
 
-	$list = $listEnum->getList();
-	$list->truncateAt( $dex+1 );
-	#dmsg( "reduce(): $key $dex list=", $list->toString() );
+    $list = $listEnum->getList();
+    $list->truncateAt( $dex+1 );
+    #dmsg( "reduce(): $key $dex list=", $list->toString() );
     }
 
     # now set the "after" counts.
     for( $dex = 0; $dex < $kNumberOfPartitions; $dex++ )
     {
-	$part = $self->getPartitionAt( $dex );
-	$self->addPartitionCountAt( $dex, $part->getCount() );
+    $part = $self->getPartitionAt( $dex );
+    $self->addPartitionCountAt( $dex, $part->getCount() );
     }
 
     #dmsg( "...reduce()" );
@@ -339,22 +339,22 @@ sub getMaxAnnotationWidthForFont
 
     for( $pdex = 0; $pdex < $kNumberOfPartitions; $pdex++ )
     {
-	$part = $self->getPartitionAt( $pdex );
-	$enum = $part->getEnumerator();
+    $part = $self->getPartitionAt( $pdex );
+    $enum = $part->getEnumerator();
 
-	for( $wrap = $enum->getNextElement();
-	    defined( $wrap );
-	    $wrap = $enum->getNextElement() )
-	{
+    for( $wrap = $enum->getNextElement();
+        defined( $wrap );
+        $wrap = $enum->getNextElement() )
+    {
 
-	    $str = $wrap->getGraphAnnotation();
-	    $width = length( $str ) * $fontWidth;
-	    if( $width > $max )
-	    {
-		$max = $width;
-	    }
-	    #dmsg( "font width=$width, max=$max" );
-	}
+        $str = $wrap->getGraphAnnotation();
+        $width = length( $str ) * $fontWidth;
+        if( $width > $max )
+        {
+        $max = $width;
+        }
+        #dmsg( "font width=$width, max=$max" );
+    }
     }
 
     return( $max );
@@ -372,10 +372,10 @@ sub toString
 
     for( $dex = 0; $dex < $kNumberOfPartitions; $dex++ )
     {
-	$str = $dex * $step + $self->getLowValue();
-	$str .= '-';
-	$str .= ($dex+1) * $step - 1 + $self->getLowValue();
-	push( @strs,  Bio::GMOD::Blast::Graph::MyUtils::makeDumpString( $dex, $str ) );
+    $str = $dex * $step + $self->getLowValue();
+    $str .= '-';
+    $str .= ($dex+1) * $step - 1 + $self->getLowValue();
+    push( @strs,  Bio::GMOD::Blast::Graph::MyUtils::makeDumpString( $dex, $str ) );
     }
 
     $str = Bio::GMOD::Blast::Graph::MyUtils::makeDumpString( $self, $kNumberOfPartitions, @strs );
@@ -391,11 +391,11 @@ sub addPartitionCountAt
     $ref = $self->{ $kPartitionCounts }->{ $dex };
     if( !defined( $ref ) )
     {
-	$self->{ $kPartitionCounts }->{ $dex } = [ $count ];
+    $self->{ $kPartitionCounts }->{ $dex } = [ $count ];
     }
     else
     {
-	push( @{$ref}, $count );
+    push( @{$ref}, $count );
     }
 }
 
@@ -408,8 +408,8 @@ sub getPartitionElementsCountAfter
     
     for( $dex = 0; $dex < $kNumberOfPartitions; $dex++ )
     {
-	$pairRef = $self->getPartitionElementsCountsRefAt( $dex );
-	$count += $$pairRef[ 1 ];
+    $pairRef = $self->getPartitionElementsCountsRefAt( $dex );
+    $count += $$pairRef[ 1 ];
     }
 
     return( $count );
@@ -424,8 +424,8 @@ sub getPartitionElementsCountBefore
     
     for( $dex = 0; $dex < $kNumberOfPartitions; $dex++ )
     {
-	$pairRef = $self->getPartitionElementsCountsRefAt( $dex );
-	$count += $$pairRef[ 0 ];
+    $pairRef = $self->getPartitionElementsCountsRefAt( $dex );
+    $count += $$pairRef[ 0 ];
     }
 
     return( $count );

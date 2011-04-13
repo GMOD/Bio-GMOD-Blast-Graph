@@ -44,24 +44,24 @@ sub cmp
 # jmc debugging
 
     if ($asn eq "" || $bsn eq "" ) {
-	print STDERR "debug ScientificNotation a = $a, b = $b, asn = $asn, bsn = $bsn\n";
+    print STDERR "debug ScientificNotation a = $a, b = $b, asn = $asn, bsn = $bsn\n";
     }
 
     if( isZero( $asn ) && ! isZero( $bsn ) )
     {
-	$cmp = -1;
+    $cmp = -1;
     }
     elsif( isZero( $bsn ) && ! isZero( $asn ) )
     {
-	$cmp = 1;
+    $cmp = 1;
     }
     elsif( $ae == $be )
     {
-	$cmp = $am <=> $bm;
+    $cmp = $am <=> $bm;
     }
     else
     {
-	$cmp = $ae <=> $be;
+    $cmp = $ae <=> $be;
     }    
 
     return( $cmp );
@@ -76,11 +76,11 @@ sub isZero
 
     if( $num eq $kZero )
     {
-	$zP = 1;
+    $zP = 1;
     }
     else
     {
-	$zP = 0;
+    $zP = 0;
     }
 
     return( $zP );
@@ -97,11 +97,11 @@ sub isOne
 
     if( $num eq $kOne )
     {
-	$zP = 1;
+    $zP = 1;
     }
     else
     {
-	$zP = 0;
+    $zP = 0;
     }
 
     return( $zP );
@@ -148,69 +148,69 @@ sub toScientificNotation
 
     if( $num eq "" )
     {
-	$sn = $kZero;
+    $sn = $kZero;
     }
     elsif( $num =~ m/([^e]*)e([^e]*)/ )
     {
-	$sn = $num;
+    $sn = $num;
     }
     elsif( $num =~ m/(\d*)\.(\d*)/ )
     {
-	my( $oldPre, $newPre );
-	my( $oldPost, $newPost );
-	my( $lenPre );
+    my( $oldPre, $newPre );
+    my( $oldPost, $newPost );
+    my( $lenPre );
 
-	$oldPre = $1;
-	$oldPost = $2;
-	$lenPre = length( $oldPre );
+    $oldPre = $1;
+    $oldPost = $2;
+    $lenPre = length( $oldPre );
 
-	# first case: \d{2,}\.\d*
-	if( $lenPre > 1 )
-	{
-	    my( $exp );
+    # first case: \d{2,}\.\d*
+    if( $lenPre > 1 )
+    {
+        my( $exp );
 
-	    $newPre = substr( $oldPre, 0, 1 );
-	    $newPost = substr( $oldPre, 1 );
-	    $newPost .= $oldPost;
-	    $exp = $lenPre-1;
-	    $sn = "$newPre.$newPost" . 'e' . $exp;
-	    $sn = addSignPrefix( $sn, $num );
-	}
-	# second case: [1-9]\.\d*
-	elsif( $lenPre == 1 && $oldPre != 0 )
-	{
-	    $sn = "$oldPre.$oldPost" . 'e0';
-	}
-	# last case: 0\.\d*
-	else
-	{
-	    my( $zcount );
-	    my( $exp );
+        $newPre = substr( $oldPre, 0, 1 );
+        $newPost = substr( $oldPre, 1 );
+        $newPost .= $oldPost;
+        $exp = $lenPre-1;
+        $sn = "$newPre.$newPost" . 'e' . $exp;
+        $sn = addSignPrefix( $sn, $num );
+    }
+    # second case: [1-9]\.\d*
+    elsif( $lenPre == 1 && $oldPre != 0 )
+    {
+        $sn = "$oldPre.$oldPost" . 'e0';
+    }
+    # last case: 0\.\d*
+    else
+    {
+        my( $zcount );
+        my( $exp );
 
-	    if( $oldPost =~ m/^(0+)/ )
-	    {
-		$zcount = length( $1 );
-	    }
-	    else
-	    {
-		$zcount = 0;
-	    }
-	    $exp = $zcount + 1;
+        if( $oldPost =~ m/^(0+)/ )
+        {
+        $zcount = length( $1 );
+        }
+        else
+        {
+        $zcount = 0;
+        }
+        $exp = $zcount + 1;
 
-	    # we resuse ourself to set the decmial
-	    # and then reset the bogus exponent value
-	    # to the correct one we just computed.
-	    dmsg( "toScientificNotation(): before $oldPost" );
-	    if ($oldPost) {
-		$sn = toScientificNotation( $oldPost );
-	    } else {	
-		$sn = 0;		
-	    }	
-	    dmsg( "toScientificNotation(): after $sn" );
+        # we resuse ourself to set the decmial
+        # and then reset the bogus exponent value
+        # to the correct one we just computed.
+        dmsg( "toScientificNotation(): before $oldPost" );
+        if ($oldPost) {
+        $sn = toScientificNotation( $oldPost );
+        } else {    
+        $sn = 0;        
+        }    
+        dmsg( "toScientificNotation(): after $sn" );
 
-	    $sn =~ s/e.*//;
-	    $sn .= "e-$exp";
-	}
+        $sn =~ s/e.*//;
+        $sn .= "e-$exp";
+    }
     }
 
     dmsg( "toScientificNotation(): $sn" );
@@ -226,7 +226,7 @@ sub cleanNumber
 
     if( ! numberP( $str ) )
     {
-	die( "cleanNumber(): can't parse $str" );
+    die( "cleanNumber(): can't parse $str" );
     }
 
     # remove any leading zeros since
@@ -240,7 +240,7 @@ sub cleanNumber
     # point if all we have is a fraction.
     if( $str =~ m/^\./ )
     {
-	$str = "0$str";
+    $str = "0$str";
     }
 
     dmsg( "cleanNumber(): 2 $str" );
@@ -248,7 +248,7 @@ sub cleanNumber
     # remove any trailing zeros.
     if( $str =~ m/(.*e\d)0+$/ )
     {
-	$str = $1;
+    $str = $1;
     }
 
     dmsg( "cleanNumber(): 3 $str" );
@@ -259,7 +259,7 @@ sub cleanNumber
     # is looking for.
     if( $str !~ m/\./ )
     {
-	$str = "$str.0";
+    $str = "$str.0";
     }
 
     dmsg( "cleanNumber(): 4 $str" );
@@ -268,7 +268,7 @@ sub cleanNumber
     # after the decimal, too.
     if( $str =~ m/\.$/ )
     {
-	$str .= "0";
+    $str .= "0";
     }
 
     dmsg( "cleanNumber(): final output = $str" );
@@ -285,7 +285,7 @@ sub addSignPrefix
     $negP = negativeP( $num );
     if( $negP )
     {
-	$str = "-$str";
+    $str = "-$str";
     }
 
     return( $str );
@@ -298,11 +298,11 @@ sub negativeP
 
     if( $num >= 0 )
     {
-	$negP = 0;
+    $negP = 0;
     }
     else
     {
-	$negP = 1;
+    $negP = 1;
     }
 
     return( $negP );

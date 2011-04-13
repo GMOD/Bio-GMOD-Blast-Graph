@@ -59,11 +59,11 @@ sub getLeastNonZeroElement
     $ref = $self->getElementsRef();
     foreach $te ( @{$ref} )
     {
-	if( ! Bio::GMOD::Blast::Graph::ScientificNotation::isZero( $te->getP() ) )
-	{
-	    $elem = $te;
-	    last;
-	}
+    if( ! Bio::GMOD::Blast::Graph::ScientificNotation::isZero( $te->getP() ) )
+    {
+        $elem = $te;
+        last;
+    }
     }
 
     return( $elem );

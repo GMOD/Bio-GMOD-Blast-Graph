@@ -62,9 +62,9 @@ sub toString {
     my( $str );
 
     $str = Bio::GMOD::Blast::Graph::MyUtils::makeDumpString($self, 
-						  $self->getName(), 
-						  $self->getP(), 
-						  $self->getScore());
+                          $self->getName(), 
+                          $self->getP(), 
+                          $self->getScore());
 
     return( $str );
 }
@@ -123,13 +123,13 @@ sub getStrandTypeCount {
 
     if( $list->getCount() > 0 )
     {
-	$count++;
+    $count++;
     }
 
     $list = $self->getReverseRef();
     if( $list->getCount() > 0 )
     {
-	$count++;
+    $count++;
     }
 
     return( $count )
@@ -147,12 +147,12 @@ sub sortHSPs {
 
     foreach my $hsp ($hit->hsps() ) {
 
-	if( $hsp->strand > 0 ) {
-	    $fwd->addElement( $hsp );
-	}
-	else {
-	    $rev->addElement( $hsp );
-	}
+    if( $hsp->strand > 0 ) {
+        $fwd->addElement( $hsp );
+    }
+    else {
+        $rev->addElement( $hsp );
+    }
     }
 
 }
@@ -234,8 +234,8 @@ sub calculateHSPLineCount {
     $self->addHSPsRef( $self->getReverseHSPs(), $self->getReverseBucketSet() );
 
     $self->{ $kLineCount } =
-	$self->getForwardBucketSet()->getCount() +
-	    $self->getReverseBucketSet()->getCount();
+    $self->getForwardBucketSet()->getCount() +
+        $self->getReverseBucketSet()->getCount();
 }
 
 ########################################################################
@@ -259,11 +259,11 @@ sub addHSPsRef {
     #dmsg( "addHSPsRef(): bset = $bset, count = " . $list->getCount() );
 
     foreach my $hsp ( @{ $list->getElementsRef() } ) {
-	my $start = $hsp->start;
-	my $end = $hsp->end;
-	my $region = new Bio::GMOD::Blast::Graph::IntSpan "$start-$end";
-	#dmsg( "addHSPsRef(): hsp = ", $hsp->name(), $hsp, $region->run_list() );
-	$bset->addRegion( $region );
+    my $start = $hsp->start;
+    my $end = $hsp->end;
+    my $region = new Bio::GMOD::Blast::Graph::IntSpan "$start-$end";
+    #dmsg( "addHSPsRef(): hsp = ", $hsp->name(), $hsp, $region->run_list() );
+    $bset->addRegion( $region );
     }
 }
 

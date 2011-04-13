@@ -53,7 +53,7 @@ sub addRegion {
     my( $self, $region ) = @_;
 
     assert( $self->disjointP($region) == 1, "illegal overlap",
-	    $self->getSpan()->run_list(), $region->run_list() );
+        $self->getSpan()->run_list(), $region->run_list() );
 
     $self->{ $kSpan } = $self->getSpan()->union( $region );
 }
@@ -74,8 +74,8 @@ sub getRegions {
     @runs = split( /,/, $runStr );
     foreach $run ( @runs )
     {
-	$region = new Bio::GMOD::Blast::Graph::IntSpan $run;
-	$regionList->addElement( $region );
+    $region = new Bio::GMOD::Blast::Graph::IntSpan $run;
+    $regionList->addElement( $region );
     }
 
     return( $regionList );
@@ -111,11 +111,11 @@ sub disjointP {
 
     if( empty $iset )
     {
-	$emptyP = 1;
+    $emptyP = 1;
     }
     else
     {
-	$emptyP = 0;
+    $emptyP = 0;
     }
     #dmsg( "disjointP():", $emptyP, $iset->run_list );
 

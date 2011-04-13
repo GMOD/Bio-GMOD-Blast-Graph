@@ -57,8 +57,8 @@ sub getListAt {
     $list = $self->{ $kLists }->{ $n };
     if( !defined($list) )
     {
-	$self->{ $kLists }->{ $n } = $list = new Bio::GMOD::Blast::Graph::List();
-	#dmsg( "getListAt( $n ): new ", $list->toString() );
+    $self->{ $kLists }->{ $n } = $list = new Bio::GMOD::Blast::Graph::List();
+    #dmsg( "getListAt( $n ): new ", $list->toString() );
     }
 
     return( $list );
@@ -88,9 +88,9 @@ sub emptyP {
 
     while( $emptyP && scalar(@keys) > 0 )
     {
-	$key = shift( @keys );
-	$list = $self->{ $kLists }->{ $key };
-	$emptyP = $list->emptyP();
+    $key = shift( @keys );
+    $list = $self->{ $kLists }->{ $key };
+    $emptyP = $list->emptyP();
     }
 
     return( $emptyP );
@@ -127,7 +127,7 @@ sub toString {
     $enum = $self->getEnumerator();
     while( defined( $list = $enum->getNextElement() ) )
     {
-	push( @strs, " " . $list->toString() . "\n" );
+    push( @strs, " " . $list->toString() . "\n" );
     }
     $str = Bio::GMOD::Blast::Graph::MyUtils::makeDumpString( $self, $self->getCount() . "\n", @strs );
 
