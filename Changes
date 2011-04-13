@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+  * add support for an -fh argument for a filehandle to use for the
+    output
+
 0.01   2011-04-13 16:01:00 America/Los_Angeles
 
   * initial CPAN release
