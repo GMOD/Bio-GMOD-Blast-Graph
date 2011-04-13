@@ -228,7 +228,7 @@ sub _parseFile {
     $self->{'_srcLength'} = $result->query_length;
 
     if (!scalar$result->hits()) {
-        print( "<p>Sorry, no hits found for your query sequence.</p>" );
+        $self->_print( "<p>Sorry, no hits found for your query sequence.</p>" );
         return;
     }
 
@@ -781,7 +781,7 @@ sub _annotateIMap {
 
     my $name = $href;
 
-    print "<area shape='rect' coords='$cx1,$cy1,$cx2,$cy2' href=\"#" . $href . "_A\" ";
+    $self->_print( "<area shape='rect' coords='$cx1,$cy1,$cx2,$cy2' href=\"#" . $href . "_A\" " );
 
     my $scoreDesc = "p=" . $wrap->getP() . " s=" . $wrap->getScore();
 
@@ -802,7 +802,7 @@ sub _annotateIMap {
     # have to escape those.
     $englishDesc =~ s/\'/\&\#39/g;
 
-    print "ONMOUSEOVER='document.daform.notes.value=\"$scoreDesc $englishDesc\"'>\n";
+    $self->_print( "ONMOUSEOVER='document.daform.notes.value=\"$scoreDesc $englishDesc\"'>\n" );
 
 }
 
@@ -1260,22 +1260,22 @@ sub _countHTML {
 
 #    print( '<center><h1>Summary of BLAST Results</h1></center>' );
 
-    print( '<p align=center>' );
+    $self->_print( '<p align=center>' );
 
     if( $shown < $max ) {
 
-    print( 'The graph shows the highest hits per range.<br>' );
-    print( '<b>Data has been omitted:</b> ' );
-    print( "$shown/$max $word displayed." );
+    $self->_print( 'The graph shows the highest hits per range.<br>' );
+    $self->_print( '<b>Data has been omitted:</b> ' );
+    $self->_print( "$shown/$max $word displayed." );
 
     }
     else {
 
-    print( 'All hits shown.' );
+    $self->_print( 'All hits shown.' );
 
     }
 
-    print( "</p>\n" );
+    $self->_print( "</p>\n" );
 
 }
 
@@ -1287,14 +1287,14 @@ sub _writeIMapStart {
 
     my ($self) = @_;
 
-    print "<center>\n";
+    $self->_print( "<center>\n" );
 
-    print start_form({-name=>'daform'}).
+    $self->_print( start_form({-name=>'daform'}).
       textfield(-name=>'notes',
             -size=>$self->{'_formFieldWidth'},
-            -value=>'Mouse-overs require JavaScript').p;
+            -value=>'Mouse-overs require JavaScript').p );
 
-    print "<MAP NAME=".$self->{'_mapName'}.">\n";
+    $self->_print( "<MAP NAME=".$self->{'_mapName'}.">\n" );
 
 }
 
@@ -1306,14 +1306,14 @@ sub _writeIMapEnd {
 
     my ($self) = @_;
 
-    print "</MAP>\n";
+    $self->_print( "</MAP>\n" );
 
-    print img({-src=>$self->{'_dstURL'}.$self->{'_imgName'},
-           -usemap=>"#".$self->{'_mapName'}});
+    $self->_print( img({-src=>$self->{'_dstURL'}.$self->{'_imgName'},
+           -usemap=>"#".$self->{'_mapName'}}) );
 
-    print end_form;
+    $self->_print( end_form );
 
-    print "</center>\n";
+    $self->_print( "</center>\n" )
 
 }
 
