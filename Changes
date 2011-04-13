@@ -1,5 +1,6 @@
 {{$NEXT}}
 
+  * bug fixes to image path handling
   * add support for an -fh argument for a filehandle to use for the
     output
 

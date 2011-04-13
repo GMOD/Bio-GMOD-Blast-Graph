@@ -386,7 +386,7 @@ sub _initGD {
 
     $img->rectangle(0, 0,
             $self->{'_realWidth'},
-            $self->{'_imgHeight'},
+            $self->{'_realHeight'},
             $self->{'_blue'});
 
 
