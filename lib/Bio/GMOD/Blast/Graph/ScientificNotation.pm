@@ -62,7 +62,7 @@ sub cmp
     else
     {
     $cmp = $ae <=> $be;
-    }    
+    }
 
     return( $cmp );
 }
@@ -203,9 +203,9 @@ sub toScientificNotation
         dmsg( "toScientificNotation(): before $oldPost" );
         if ($oldPost) {
         $sn = toScientificNotation( $oldPost );
-        } else {    
-        $sn = 0;        
-        }    
+        } else {
+        $sn = 0;
+        }
         dmsg( "toScientificNotation(): after $sn" );
 
         $sn =~ s/e.*//;

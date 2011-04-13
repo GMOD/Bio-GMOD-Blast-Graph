@@ -69,7 +69,7 @@ sub getKey {
     my( @parts ) = @_;
 
     my( $ret ) = join( ":", @parts );
-   
+
     return( $ret );
 }
 

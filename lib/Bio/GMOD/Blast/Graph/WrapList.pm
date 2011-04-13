@@ -55,7 +55,7 @@ sub getLeastNonZeroElement
     my( $self ) = shift;
     my( $elem );
     my( $ref, $te );
-    
+
     $ref = $self->getElementsRef();
     foreach $te ( @{$ref} )
     {

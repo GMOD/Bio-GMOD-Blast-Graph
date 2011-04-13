@@ -18,19 +18,19 @@ use Bio::GMOD::Blast::Graph::ScientificNotation;
 @ISA = qw( Bio::GMOD::Blast::Graph::BaseObj );
 
 ##################################################################
-my $kHit 
+my $kHit
     = Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "hit" );
-my $kForwardHSPs 
+my $kForwardHSPs
     = Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "forward", "hsps" );
-my $kReverseHSPs 
+my $kReverseHSPs
     = Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "reverse", "hsps" );
-my $kSortedP 
+my $kSortedP
     = Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "sorted", "predicate" );
-my $kLineCount 
+my $kLineCount
     = Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "line", "count" );
-my $kForwardBucketSet 
+my $kForwardBucketSet
     = Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "forward", "bucket", "set" );
-my $kReverseBucketSet 
+my $kReverseBucketSet
     = Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "reverse", "bucket", "set" );
 
 #################################################################
@@ -61,9 +61,9 @@ sub toString {
     my( $self ) = shift;
     my( $str );
 
-    $str = Bio::GMOD::Blast::Graph::MyUtils::makeDumpString($self, 
-                          $self->getName(), 
-                          $self->getP(), 
+    $str = Bio::GMOD::Blast::Graph::MyUtils::makeDumpString($self,
+                          $self->getName(),
+                          $self->getP(),
                           $self->getScore());
 
     return( $str );
@@ -171,7 +171,7 @@ sub getPExponent {
 ##################################################################
 
     my( $self ) = shift;
-    
+
     my $p = $self->getP();
 
     my $exp = Bio::GMOD::Blast::Graph::ScientificNotation::getExponent( $p );
@@ -251,10 +251,10 @@ sub getHSPLineCount {
 sub addHSPsRef {
 ########################################################################
     my( $self, $list, $bset ) = @_;
- 
+
 
     # the list could be empty (we don't
-    # always have both forward and reverse hsps).   
+    # always have both forward and reverse hsps).
 
     #dmsg( "addHSPsRef(): bset = $bset, count = " . $list->getCount() );
 

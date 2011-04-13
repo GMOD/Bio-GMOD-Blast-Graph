@@ -35,7 +35,7 @@ sub dmsg
     ( $pkg, $file, $line ) = caller();
 
     $flag = $pkgOn{ $pkg };
-    
+
     if( !defined($flag) || $flag != 0 )
     {
     print STDERR "[$pkg $line]", join( " ", @msg ), "\n";
@@ -51,7 +51,7 @@ sub dmsgs
     ( $pkg, $file, $line ) = caller();
 
     $flag = $pkgOn{ $pkg };
-    
+
     if( !defined($flag) || $flag != 0 )
     {
     print STDERR "[$pkg $line]", join( ", ", @msg ), "\n";

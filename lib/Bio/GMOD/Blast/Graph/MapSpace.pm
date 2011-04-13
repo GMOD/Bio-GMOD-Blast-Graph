@@ -16,11 +16,11 @@ use Bio::GMOD::Blast::Graph::MyDebug qw( assert dmsg );
 
 @ISA = qw( Bio::GMOD::Blast::Graph::BaseObj );
 
-my $kInitialSpace = 
+my $kInitialSpace =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "initial", "space" );
-my $kSpaceRemaining = 
+my $kSpaceRemaining =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "space", "remaining" );
-my $kFullP = 
+my $kFullP =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "full", "predicate" );
 
 #######################################################################

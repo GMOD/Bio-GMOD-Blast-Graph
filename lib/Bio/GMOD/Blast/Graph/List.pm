@@ -88,7 +88,7 @@ sub getElementAt {
     $ref = $self->getElementsRef();
     $elem = $ { $ref } [ $dex ];
     }
- 
+
     return( $elem );
 }
 
@@ -220,8 +220,8 @@ sub toString {
     my( $self ) = shift;
     my( $str );
 
-    $str = Bio::GMOD::Blast::Graph::MyUtils::makeDumpString($self, 
-                          $self->getCount, 
+    $str = Bio::GMOD::Blast::Graph::MyUtils::makeDumpString($self,
+                          $self->getCount,
                           @{$self->getElementsRef()});
 
     return( $str );

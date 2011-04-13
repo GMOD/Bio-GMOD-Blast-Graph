@@ -28,13 +28,13 @@ use Bio::GMOD::Blast::Graph::MapDefs
 # P=1e-100 -- P=1e-200
 # P<1e-200
 
-my $kPartitionSet = 
+my $kPartitionSet =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "partition", "set" ); # ListSet.
-my $kPartitionCounts = 
+my $kPartitionCounts =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "partition", "counts" );
-my $kRemovalPartitionIndex = 
+my $kRemovalPartitionIndex =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "removal", "partition", "index" );
-my $kSpace = 
+my $kSpace =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "space" );
 
 
@@ -107,7 +107,7 @@ sub getPartitionIndexFromExtendedValue
     elsif( $value <= $bucketThreeMax ) { $dex = 3; }
     elsif( $value <= $bucketFourMax ) { $dex = 4; }
     else { confess( 'invalid value $value' ); }
-   
+
     #dmsg( "getPartitionIndexFromExtendedValue( $value ): $dex" );
 
     return( $dex );
@@ -121,7 +121,7 @@ sub getPartitionFromExtendedValue
 
     $dex = $self->getPartitionIndexFromExtendedValue( $value );
     $part = $self->getPartitionAt( $dex );
-    
+
     return( $part );
 }
 
@@ -187,7 +187,7 @@ sub reduce
     my( $debugCount ) = 0;
 
     # my apologies for how gross this code is!
-    
+
     # while we have room left,
     # and there are still lists with data,
     # do one loop over the lists.
@@ -198,7 +198,7 @@ sub reduce
     for( @keys = sort keys( %listEnums );
      (scalar(@keys) > 0) && (!$space->getFullP());
      @keys = sort keys( %listEnums ) )
-    {    
+    {
     # during one loop, stop if we run out of space.
 
     #dmsg( "reduce(): #keys = ", scalar(@keys) );
@@ -367,7 +367,7 @@ sub toString
     my( @strs );
     my( $dex );
     my( $step );
-    
+
     $step = $self->getPartitionValueStep();
 
     for( $dex = 0; $dex < $kNumberOfPartitions; $dex++ )
@@ -405,7 +405,7 @@ sub getPartitionElementsCountAfter
     my( $count );
     my( $dex );
     my( $pairRef );
-    
+
     for( $dex = 0; $dex < $kNumberOfPartitions; $dex++ )
     {
     $pairRef = $self->getPartitionElementsCountsRefAt( $dex );
@@ -421,7 +421,7 @@ sub getPartitionElementsCountBefore
     my( $count );
     my( $dex );
     my( $pairRef );
-    
+
     for( $dex = 0; $dex < $kNumberOfPartitions; $dex++ )
     {
     $pairRef = $self->getPartitionElementsCountsRefAt( $dex );

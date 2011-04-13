@@ -65,7 +65,7 @@ sub getNextElement {
     $self->putIndex( ++$dex );
 
     if( $dex <= $maxDex )
-    {    
+    {
     $key = $self->getKey( $dex );
     $elem = $self->getListSet()->getListAt( $key );
     #dmsg( "getNextElement(): $dex $key $elem" );

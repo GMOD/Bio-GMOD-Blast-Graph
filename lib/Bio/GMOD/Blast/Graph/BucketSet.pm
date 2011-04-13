@@ -25,7 +25,7 @@ use Bio::GMOD::Blast::Graph::MyDebug qw( dmsg );
 # to make sure they aren't overlapping.
 #
 
-my( $kBucketList ) = 
+my( $kBucketList ) =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "bucket", "list" );
 
 ##################################################################

@@ -135,7 +135,7 @@ removes all elements from $set.
 
 =head2 Object reference
 
-If an object reference is given, it is taken to be a 
+If an object reference is given, it is taken to be a
 Bio::GMOD::Blast::Graph::IntSpan object.
 
 =head2 Array reference
@@ -784,7 +784,7 @@ sub union
     {
         my $xA = $$eA[$iA];
         my $xB = $$eB[$iB];
-        
+
         if ($xA < $xB)
         {
             $iA++;
@@ -836,7 +836,7 @@ sub intersect
     {
         my $xA = $$eA[$iA];
         my $xB = $$eB[$iB];
-        
+
         if ($xA < $xB)
         {
             $iA++;
@@ -888,7 +888,7 @@ sub diff
     {
         my $xA = $$eA[$iA];
         my $xB = $$eB[$iB];
-        
+
         if ($xA < $xB)
         {
             $iA++;
@@ -937,7 +937,7 @@ sub xor
     {
         my $xA = $$eA[$iA];
         my $xB = $$eB[$iB];
-        
+
         if ($xA < $xB)
         {
             $iA++;

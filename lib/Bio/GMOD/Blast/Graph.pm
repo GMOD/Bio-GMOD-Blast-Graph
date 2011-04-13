@@ -57,13 +57,13 @@ Usage :
 
 ##################################################################
     my ($class, @args) = @_;
-    
+
     my $self = $class->SUPER::new(@args);
 
     $self->_init(@args);
 
     $self->_parseFile;
-    
+
     return $self;
 
 }
@@ -84,7 +84,7 @@ Usage:
 
 ##################################################################
     my ($self) = @_;
-    
+
     $self->_createAndShowGraph;
 
 }
@@ -142,14 +142,14 @@ Usage:
 sub _init {
 ##################################################################
 # This private method checks that all the required arguments
-# have been provided and stores them within the object, and 
-# initializes variables for optional arguments if they are not 
-# provided. 
+# have been provided and stores them within the object, and
+# initializes variables for optional arguments if they are not
+# provided.
 
     my ($self, @args) = @_;
-    
+
     my ($outputFile, $format, $dstDir, $dstURL, $imgName,
-    $showNamesP, $db) = 
+    $showNamesP, $db) =
         $self->_rearrange([qw(OUTPUTFILE
                   FORMAT
                   DSTDIR
@@ -157,13 +157,13 @@ sub _init {
                   IMGNAME
                   SHOWNAMESP
                   DB)], @args);
-    
+
     if (!$outputFile) {
 
     $self->throw("The search output file needs to be passed to '$ID' object.");
 
     }
-    
+
     if (!$dstDir) {
 
     $self->throw("A tmp directory for storing the image file needs to be passed to '$ID' object.");
@@ -199,7 +199,7 @@ sub _init {
     $self->{'_formFieldWidth'} = 100;
 
     $self->{'_debugCount'} = 0;
-     
+
     $self->{'_tickList'} = [];
 
     $self->{'_mapUtils'} = new Bio::GMOD::Blast::Graph::MapUtils($showNamesP);
@@ -210,7 +210,7 @@ sub _init {
 ###################################################################
 sub _parseFile {
 ###################################################################
-# This private method parses the search output file by simply 
+# This private method parses the search output file by simply
 # calling the Bioperl SearchIO module and stores the hits in
 # the hit list.
 
@@ -220,7 +220,7 @@ sub _parseFile {
                       -format=>$self->{'_format'});
 
     my $wrapList = new Bio::GMOD::Blast::Graph::WrapList();
-   
+
     my @hitName;
 
     while (my $result = $searchio->next_result) {
@@ -234,7 +234,7 @@ sub _parseFile {
 
     while (my $hit = $result->next_hit()) {
 
-        
+
         push(@hitName, $hit->name);
 
         # if ($hit->name =~ /^ORF[NP]:(.+)$/) {
@@ -248,18 +248,18 @@ sub _parseFile {
         # dmsg( "adding", $wrap->toString(), $wrap->getPExponent() );
 
         $wrapList->addElement( $wrap );
-    
+
     }
-    
+
     # we want to scale everything to fit in the Mapic.
     # convert from length to pixels. length * (pixels/length) = pixels.
-    $self->{'_horizRatio'} = 
+    $self->{'_horizRatio'} =
         $self->{'_mapUtils'}->getQueryWidth()/$self->{'_srcLength'};
-    
+
     }
 
     $self->{'_hitNameArrayRef'} = \@hitName;
-    
+
     $wrapList->sortByPValue();
 
     undef $searchio;
@@ -269,17 +269,17 @@ sub _parseFile {
     # we don't show.
     $self->{'_hitCount'} = $wrapList->getCount();
 
-    $self->{'_parts'} = 
+    $self->{'_parts'} =
     new Bio::GMOD::Blast::Graph::WrapPartitionsFixed( $wrapList );
 
     $self->{'_parts'}->reduce();
 
     $self->{'_hitCountBefore'} = $self->{'_hitCount'};
 
-    $self->{'_hitCountAfter'} = 
+    $self->{'_hitCountAfter'} =
     $self->{'_parts'}->getPartitionElementsCountAfter();
 
-    $self->_countHTML($self->{'_hitCountAfter'}, 
+    $self->_countHTML($self->{'_hitCountAfter'},
               $self->{'_hitCountBefore'});
 
     if( $self->{'_hitCountAfter'} == $self->{'_hitCountBefore'} ) {
@@ -288,7 +288,7 @@ sub _parseFile {
 
     }
     else {
-    
+
     $self->{'_allShowingP'} = 0;
 
     }
@@ -298,7 +298,7 @@ sub _parseFile {
 #######################################################################
 sub _createAndShowGraph {
 #######################################################################
-# This is a wrapper method which simply calls each private method to 
+# This is a wrapper method which simply calls each private method to
 # do the job.
 
     my ($self) = @_;
@@ -324,12 +324,12 @@ sub _createAndShowGraph {
 ###################################################################
 sub _initGD {
 ###################################################################
-# This private method initializes the GD object and colors, and 
+# This private method initializes the GD object and colors, and
 # draws a frame around the map.
 
     my ($self) = @_;
 
-    my $annotationWidth = 
+    my $annotationWidth =
     $self->{'_parts'}->getMaxAnnotationWidthForFont($fontWidth);
 
     $self->{'_mapUtils'}->putNamesHorizBorder($annotationWidth+10);
@@ -338,7 +338,7 @@ sub _initGD {
 
     $self->{'_realHeight'} = $self->{'_parts'}->getHeight() + $imgVertBorder;
 
-    my $img = new GD::Image($self->{'_realWidth'}, 
+    my $img = new GD::Image($self->{'_realWidth'},
                 $self->{'_realHeight'});
 
     $img->interlaced('true');
@@ -376,20 +376,20 @@ sub _initGD {
 
     # but everything else should have a white background
     # to distinguish where the hits start & end.
-    
-    # $img->filledRectangle(0, 0, 
-#              $self->{'_realWidth'}, 
-#              $self->{'_imgHeight'}, 
+
+    # $img->filledRectangle(0, 0,
+#              $self->{'_realWidth'},
+#              $self->{'_imgHeight'},
 #              $self->{'_white'});
 
-    $img->rectangle(0, 0, 
-            $self->{'_realWidth'}, 
-            $self->{'_imgHeight'}, 
+    $img->rectangle(0, 0,
+            $self->{'_realWidth'},
+            $self->{'_imgHeight'},
             $self->{'_blue'});
 
 
     $self->{'_img'} = $img;
-    
+
 }
 
 #----------------------------------------
@@ -407,7 +407,7 @@ sub _writeImage {
     die ("couldn't write to ".$self->{'_dstDir'}.$self->{'_imgName'});
 
     }
-    
+
     if ($self->{'_img'}->can('png')) {
 
     print IMAGEOUT $self->{'_img'}->png;
@@ -416,7 +416,7 @@ sub _writeImage {
     else {
 
     print IMAGEOUT $self->{'_img'}->gif;
-    
+
     }
     close IMAGEOUT;
 
@@ -433,13 +433,13 @@ sub _drawGraph {
 # different private methods to draw the different parts.
 
     my ($self) = @_;
-   
+
     # dmsg( "drawGraph()..." );
 
     my( $hspBefore, $hspAfter, $hspMid );
     my( $countsRef );
     my( $countsStr );
-  
+
     my( $totalCount, $shownCount );
 
     my $hspPos = $hspPosInit;
@@ -460,7 +460,7 @@ sub _drawGraph {
     my $wrap;
 
     while( defined( $wrap = $enum->getNextElement() ) ) {
-        
+
         $hspPos = $self->_drawWrap( $wrap, $hspPos );
 
     }
@@ -470,7 +470,7 @@ sub _drawGraph {
     # annotate with count of
     # shown/total per bucket.
 
-    $countsRef = 
+    $countsRef =
         $self->{'_parts'}->getPartitionElementsCountsRefAt($pdex);
 
     #dmsgs( "drawGraph(): partition counts = ", @{$countsRef} );
@@ -496,10 +496,10 @@ sub _drawGraph {
         $hspMid = $self->_getHspMid( $hspBefore, $hspAfter );
 
         $self->_drawString( $countsStr, GD::gdSmallFont(),
-                  $self->{'_realWidth'}-$imgRightBorder+3, 
+                  $self->{'_realWidth'}-$imgRightBorder+3,
                   $hspMid,
                   $self->_pickColorN($pdex));
-    
+
         }
     }
     }
@@ -513,7 +513,7 @@ sub _getHspMid {
 # This private method is used to get the position for the given hsp.
 
     my($self, $hspBefore, $hspAfter) = @_;
-   
+
     return ($hspBefore + ($hspAfter - $hspBefore)/2 - $fontHeight/2 - 2);
 
 
@@ -525,7 +525,7 @@ sub _drawWrap {
 # This private method is used to the wrap background.
 
     my($self, $wrap, $hspPos ) = @_;
-    
+
     my $fwdRef = $wrap->getForwardBucketSet();
     my $revRef = $wrap->getReverseBucketSet();
 
@@ -539,38 +539,38 @@ sub _drawWrap {
     my $bgY1 = $hspPos;
     my $bgY2 = $hspPos + $hspHeight * $wrap->getHSPLineCount() - 1;
 
-    $self->{'_curBgColor'} = 
-    ($self->{'_curBgColor'} == $self->{'_bgColor2'}) ? 
+    $self->{'_curBgColor'} =
+    ($self->{'_curBgColor'} == $self->{'_bgColor2'}) ?
         $self->{'_bgColor3'} : $self->{'_bgColor2'};
 
-    $self->{'_img'}->filledRectangle($self->{'_mapUtils'}->getNoteLeft(), 
-                     $bgY1, 
-                     $self->{'_realWidth'}-$imgRightBorder, 
-                     $bgY2, 
+    $self->{'_img'}->filledRectangle($self->{'_mapUtils'}->getNoteLeft(),
+                     $bgY1,
+                     $self->{'_realWidth'}-$imgRightBorder,
+                     $bgY2,
                      $self->{'_curBgColor'});
 
-    $self->_annotateIMap($wrap, 
-             $self->{'_mapUtils'}->getNoteLeft(), 
-             $bgY1, 
-             $self->{'_realWidth'}-$imgRightBorder, 
+    $self->_annotateIMap($wrap,
+             $self->{'_mapUtils'}->getNoteLeft(),
+             $bgY1,
+             $self->{'_realWidth'}-$imgRightBorder,
              $bgY2 );
-   
+
     foreach my $tickX (@{$self->{'_tickList'}}) {
 
-    $self->{'_img'}->line($self->{'_mapUtils'}->getQueryLeft()+$tickX, 
-                  $bgY1, 
-                  $self->{'_mapUtils'}->getQueryLeft()+$tickX, 
-                  $bgY2, 
+    $self->{'_img'}->line($self->{'_mapUtils'}->getQueryLeft()+$tickX,
+                  $bgY1,
+                  $self->{'_mapUtils'}->getQueryLeft()+$tickX,
+                  $bgY2,
                   $self->{'_white'});
 
     }
 
     if($self->{'_showNamesP'}) {
 
-    $self->{'_img'}->line($self->{'_mapUtils'}->getQueryLeft(), 
-                  $bgY1, 
-                  $self->{'_mapUtils'}->getQueryLeft(), 
-                  $bgY2, 
+    $self->{'_img'}->line($self->{'_mapUtils'}->getQueryLeft(),
+                  $bgY1,
+                  $self->{'_mapUtils'}->getQueryLeft(),
+                  $bgY2,
                   $self->{'_white'});
     }
 
@@ -580,18 +580,18 @@ sub _drawWrap {
 
     if( $fwdCount > 0 ) {
 
-    $hspPos = $self->_drawDirection($fwdRef->getBucketList(), 
-                    $hspPos, 
-                    'plus', 
+    $hspPos = $self->_drawDirection($fwdRef->getBucketList(),
+                    $hspPos,
+                    'plus',
                     $colorN );
 
     }
 
     if( $revCount > 0 ) {
 
-    $hspPos = $self->_drawDirection($revRef->getBucketList(), 
-                    $hspPos, 
-                    'minus', 
+    $hspPos = $self->_drawDirection($revRef->getBucketList(),
+                    $hspPos,
+                    'minus',
                     $colorN );
     }
 
@@ -614,10 +614,10 @@ sub _drawWrap {
 
     my $hspMid = $self->_getHspMid($hspBefore, $hspAfter);
 
-    $self->{'_img'}->string(GD::gdSmallFont(), 
-                $x, 
-                $hspMid, 
-                $note, 
+    $self->{'_img'}->string(GD::gdSmallFont(),
+                $x,
+                $hspMid,
+                $note,
                 $self->{'_black'});
     }
 
@@ -667,8 +667,8 @@ sub _drawQuery {
 # This private method is used to draw the query sequence bar.
 
     my($self) = @_;
-    
-    
+
+
     ### try to space the ticks out reasonably.
 
     my $rawStep;
@@ -679,19 +679,19 @@ sub _drawQuery {
     elsif( $self->{'_srcLength'} < 5000 ) { $rawStep = 200; }
     else { $rawStep = 500; }
 
-    $self->{'_img'}->line($self->{'_mapUtils'}->getQueryLeft(), 
+    $self->{'_img'}->line($self->{'_mapUtils'}->getQueryLeft(),
               $topDataOffset,
-              $self->{'_mapUtils'}->getQueryLeft()+$self->{'_srcLength'}*$self->{'_horizRatio'}, 
+              $self->{'_mapUtils'}->getQueryLeft()+$self->{'_srcLength'}*$self->{'_horizRatio'},
               $topDataOffset,
               $self->{'_black'});
 
     $self->{'_img'}->string(GD::gdSmallFont(),
-                $self->{'_mapUtils'}->getQueryLeft(), 
+                $self->{'_mapUtils'}->getQueryLeft(),
                 $topDataOffset-15,
-                "Query", 
+                "Query",
                 $self->{'_black'});
 
-    
+
     for(my $rawX=$rawStep; $rawX < $self->{'_srcLength'}; $rawX+=$rawStep) {
 
     my $str = "$rawX";
@@ -701,25 +701,25 @@ sub _drawQuery {
     }
 
     my $pX = $self->{'_mapUtils'}->getQueryLeft();
-    $self->{'_img'}->line($pX, 
-              $topDataOffset, 
-              $pX, 
-              $topDataOffset+2, 
+    $self->{'_img'}->line($pX,
+              $topDataOffset,
+              $pX,
+              $topDataOffset+2,
               $self->{'_black'});
 
     $pX = $self->{'_mapUtils'}->getQueryLeft()+int($self->{'_srcLength'}*$self->{'_horizRatio'});
 
-    $self->{'_img'}->line($pX, 
-              $topDataOffset, 
-              $pX, 
-              $topDataOffset+2, 
+    $self->{'_img'}->line($pX,
+              $topDataOffset,
+              $pX,
+              $topDataOffset+2,
               $self->{'_black'});
 
 }
 
 ################################################################################
 sub _drawTick {
-################################################################################ 
+################################################################################
 # This private method is used to draw the tick marks for the query sequence
 # bar.
 
@@ -731,22 +731,22 @@ sub _drawTick {
 
     push(@{$self->{'_tickList'}}, $pX);
 
-    $self->{'_img'}->line($self->{'_mapUtils'}->getQueryLeft()+$pX, 
+    $self->{'_img'}->line($self->{'_mapUtils'}->getQueryLeft()+$pX,
               $topDataOffset,
-              $self->{'_mapUtils'}->getQueryLeft()+$pX, 
-              $topDataOffset-$tickHeight, 
+              $self->{'_mapUtils'}->getQueryLeft()+$pX,
+              $topDataOffset-$tickHeight,
               $self->{'_black'});
 
     $self->{'_img'}->string(GD::gdSmallFont(),
-                $self->{'_mapUtils'}->getQueryLeft()+$pX-$nudgeTextX, 
+                $self->{'_mapUtils'}->getQueryLeft()+$pX-$nudgeTextX,
                 $topDataOffset-15,
-                $str, 
+                $str,
                 $self->{'_black'});
 }
 
 ##################################################################################
 sub _drawString {
-################################################################################ 
+################################################################################
 # This private method is used to draw the text string.
 
     my ($self, $str, $font, $xpos, $ypos, $color) = @_;
@@ -755,10 +755,10 @@ sub _drawString {
 
     my $end = length($str) * $fontWidth;
 
-    $self->{'_img'}->string($font, 
-                $xpos, 
-                $ypos, 
-                $str, 
+    $self->{'_img'}->string($font,
+                $xpos,
+                $ypos,
+                $str,
                 $color );
 
     return $end;
@@ -767,7 +767,7 @@ sub _drawString {
 
 ###################################################################################
 sub _annotateIMap {
-################################################################################ 
+################################################################################
 # This private method is used to initialize the mouseover function.
 
     my ($self, $wrap, $x1, $y1, $x2, $y2) = @_;
@@ -782,7 +782,7 @@ sub _annotateIMap {
     my $name = $href;
 
     print "<area shape='rect' coords='$cx1,$cy1,$cx2,$cy2' href=\"#" . $href . "_A\" ";
-   
+
     my $scoreDesc = "p=" . $wrap->getP() . " s=" . $wrap->getScore();
 
     my $pos = $self->{'_formFieldWidth'} - length($scoreDesc);
@@ -803,7 +803,7 @@ sub _annotateIMap {
     $englishDesc =~ s/\'/\&\#39/g;
 
     print "ONMOUSEOVER='document.daform.notes.value=\"$scoreDesc $englishDesc\"'>\n";
-   
+
 }
 
 ###################################################################################
@@ -857,50 +857,50 @@ sub _drawKey {
     my ($self) = @_;
 
     # draw the fixed parts, the arrows.
-  
+
     my $strOffset = 22;
 
     my $ypos = $self->{'_realHeight'} - $imgBottomBorder + $bottomDataOffset;
 
     my $xpos = $self->{'_mapUtils'}->getQueryLeft();
 
-    $strOffset = $self->_drawString("Fwd:", 
-                    GD::gdMediumBoldFont(), 
-                    $xpos, 
-                    $ypos+1, 
+    $strOffset = $self->_drawString("Fwd:",
+                    GD::gdMediumBoldFont(),
+                    $xpos,
+                    $ypos+1,
                     $self->{'_grayDark'});
 
     $xpos += $strOffset + 4;
 
-    $self->_drawArrowedOutlined($xpos, 
-                int($ypos+$fontHeight/2), 
-                9, 
-                'plus', 
-                $self->{'_grayDark'}, 
+    $self->_drawArrowedOutlined($xpos,
+                int($ypos+$fontHeight/2),
+                9,
+                'plus',
+                $self->{'_grayDark'},
                 $self->{'_grayDark'});
 
 
     $xpos += 18;
 
-    $self->_drawString("Rev:", 
-               GD::gdMediumBoldFont(), 
-               $xpos, 
-               $ypos+1, 
+    $self->_drawString("Rev:",
+               GD::gdMediumBoldFont(),
+               $xpos,
+               $ypos+1,
                $self->{'_grayDark'});
 
     $xpos += $strOffset + 4;
 
-    $self->_drawArrowedOutlined($xpos, 
-                int($ypos+$fontHeight/2), 
-                9, 
-                'minus', 
-                $self->{'_grayDark'}, 
+    $self->_drawArrowedOutlined($xpos,
+                int($ypos+$fontHeight/2),
+                9,
+                'minus',
+                $self->{'_grayDark'},
                 $self->{'_grayDark'});
 
 
     my @barParts = $self->_makeColorBar();
 
-   
+
     my $partPad = 10;
 
     my $scoreStr  = "Neg P Exponent: ";
@@ -919,8 +919,8 @@ sub _drawKey {
 
     $strWidthPart = length($str) * $fontWidth + $partPad;
 
-        Bio::GMOD::Blast::Graph::MyUtils::updateBoundRef(\$strWidthPartMax, 
-                           $strWidthPart, 
+        Bio::GMOD::Blast::Graph::MyUtils::updateBoundRef(\$strWidthPartMax,
+                           $strWidthPart,
                       \&Bio::GMOD::Blast::Graph::MyUtils::largerP);
 
     $strWidthFull += $strWidthPart;
@@ -928,16 +928,16 @@ sub _drawKey {
     }
 
     # center key in image.
-    $xpos = $self->{'_mapUtils'}->getQueryLeft() + 
+    $xpos = $self->{'_mapUtils'}->getQueryLeft() +
     int($self->{'_mapUtils'}->getQueryWidth()-$strWidthFull)/2;
 
     # nudge it to the left to be optically more balanced.
     $xpos -= 5;
 
-    $self->{'_img'}->string(GD::gdMediumBoldFont(), 
-                $xpos, 
-                $ypos+1, 
-                $scoreStr, 
+    $self->{'_img'}->string(GD::gdMediumBoldFont(),
+                $xpos,
+                $ypos+1,
+                $scoreStr,
                 $self->{'_grayDark'});
 
     $xpos += length($scoreStr) * $fontWidth + $partPad;
@@ -948,20 +948,20 @@ sub _drawKey {
 
     my $clr = $self->_pickColorN($barParts[$dex*2+1]);
 
-    $self->{'_img'}->filledRectangle($xpos, 
-                     $ypos, 
-                     $xpos+$strWidthPartMax, 
-                     $ypos+$fontHeight+5, 
+    $self->{'_img'}->filledRectangle($xpos,
+                     $ypos,
+                     $xpos+$strWidthPartMax,
+                     $ypos+$fontHeight+5,
                      $clr );
 
     $strWidthPart = length($str) * $fontWidth;
 
     $strOffset = ( $strWidthPartMax - $strWidthPart ) / 2;
 
-    $self->{'_img'}->string(GD::gdSmallFont(), 
-                $xpos+$strOffset, 
-                $ypos+1, 
-                $str, 
+    $self->{'_img'}->string(GD::gdSmallFont(),
+                $xpos+$strOffset,
+                $ypos+1,
+                $str,
                 $self->{'_white'});
 
     $xpos += $strWidthPartMax;
@@ -973,7 +973,7 @@ sub _drawKey {
 #########################################################################
 sub _getArrowedLinePoly {
 #########################################################################
-# This private method is used to get the coordinates for the arrow 
+# This private method is used to get the coordinates for the arrow
 # locations.
 
     my( $self, $x1, $y1, $scaledLength, $dir) = @_;
@@ -1052,8 +1052,8 @@ sub _drawArrowedOutlinedFromN {
     my $light = $self->_pickColorN($colorN, 0);
     my $dark = $self->_pickColorN($colorN, 1);
 
-    $self->_drawArrowedOutlined($x1, $y1, 
-                $scaledLength, 
+    $self->_drawArrowedOutlined($x1, $y1,
+                $scaledLength,
                 $dir, $light, $dark );
 
 }
@@ -1078,24 +1078,24 @@ sub _drawArrowedOutlined {
 
     # used to use curBgColor but i think all white is more clear.
     if($self->_rightP($dir)) {
-   
-    $self->{'_img'}->line($xmidLeft, $y1, 
-                  $xmidRight, $ymid, 
+
+    $self->{'_img'}->line($xmidLeft, $y1,
+                  $xmidRight, $ymid,
                   $self->{'_white'});
 
-    $self->{'_img'}->line($xmidRight, $ymid, 
-                  $xmidLeft, $y2, 
+    $self->{'_img'}->line($xmidRight, $ymid,
+                  $xmidLeft, $y2,
                   $self->{'_white'});
 
     }
     else {
 
-    $self->{'_img'}->line($xmidRight, $y1, 
-                  $xmidLeft, $ymid, 
+    $self->{'_img'}->line($xmidRight, $y1,
+                  $xmidLeft, $ymid,
                   $self->{'_white'});
 
-    $self->{'_img'}->line($xmidLeft, $ymid, 
-                  $xmidRight, $y2, 
+    $self->{'_img'}->line($xmidLeft, $ymid,
+                  $xmidRight, $y2,
                   $self->{'_white'});
 
     }
@@ -1108,18 +1108,18 @@ sub _drawArrowedOutlined {
 #####################################################################
 sub _getColorNFromP {
 #####################################################################
-# This private method is used to initialize the color based on the 
+# This private method is used to initialize the color based on the
 # pvalue.
 
     my ($self, $wrap, $darkP) = @_;
-    
+
     # [[ this assumes that we have 5 partitions,
     # since the number of colors is fixed. ]]
 
     my $value = $wrap->getP();
 
     return $self->{'_parts'}->getPartitionIndexFromExtendedValue($value);
-    
+
 }
 
 #####################################################################
@@ -1128,7 +1128,7 @@ sub _pickColorN {
 # This private method is used to pick up a right color for the hit.
 
     my($self, $n, $darkP) = @_;
-    
+
 
     if( !defined($darkP) ) { $darkP = 0; }
 
@@ -1171,7 +1171,7 @@ sub _pickColorN {
 
 ####################################################################################
 sub _pickNextDebugColors {
-####################################################################################    
+####################################################################################
 # This private method is used to pick up the debug colors.
 
     my ($self) = @_;
@@ -1237,10 +1237,10 @@ sub _drawStamp {
     my $xpos = $self->{'_realWidth'} - (length( $dstr ) * $fontWidth) - $imgRightBorder;
     my $ypos = $self->{'_realHeight'} - $imgBottomBorder + $bottomDataOffset;
 
-    $self->_drawString($dstr, 
-               GD::gdSmallFont(), 
-               $xpos, 
-               $ypos, 
+    $self->_drawString($dstr,
+               GD::gdSmallFont(),
+               $xpos,
+               $ypos,
                $self->{'_grayDark'});
 
 }
@@ -1282,8 +1282,8 @@ sub _countHTML {
 ##################################################################################
 sub _writeIMapStart {
 ##################################################################################
-# This private method is used to print a start_form tag, a text field for 
-# displaying the mouseover message, and a start map tag. 
+# This private method is used to print a start_form tag, a text field for
+# displaying the mouseover message, and a start map tag.
 
     my ($self) = @_;
 
@@ -1293,7 +1293,7 @@ sub _writeIMapStart {
       textfield(-name=>'notes',
             -size=>$self->{'_formFieldWidth'},
             -value=>'Mouse-overs require JavaScript').p;
-          
+
     print "<MAP NAME=".$self->{'_mapName'}.">\n";
 
 }
@@ -1301,9 +1301,9 @@ sub _writeIMapStart {
 #################################################################################
 sub _writeIMapEnd {
 #################################################################################
-# This private method is used to draw the end map tag and print the map to the 
+# This private method is used to draw the end map tag and print the map to the
 # stdout (browser).
- 
+
     my ($self) = @_;
 
     print "</MAP>\n";
@@ -1322,10 +1322,10 @@ sub _rightP {
 #################################################################################
     my ($self, $dir) = @_;
 
-    if( $dir =~ m/plus/i ) { # is plus == right? 
+    if( $dir =~ m/plus/i ) { # is plus == right?
 
     return 1;
-    
+
     }
     else {
 
@@ -1341,7 +1341,7 @@ sub _leftP {
     my ($self, $dir) = @_;
 
     if( $dir =~ m/minus/i ) { # is minus == left?
-    
+
     return 1;
 
     }
@@ -1354,7 +1354,7 @@ sub _leftP {
 }
 
 #################################################################################
-1; 
+1;
 #################################################################################
 
 

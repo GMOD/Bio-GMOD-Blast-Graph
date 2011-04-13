@@ -22,15 +22,15 @@ use Bio::GMOD::Blast::Graph::MapDefs
 
 @ISA = qw( Bio::GMOD::Blast::Graph::BaseObj );
 
-my $kNamesP = 
+my $kNamesP =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "names", "predicate" );
-my $kNamesHorizBorder = 
+my $kNamesHorizBorder =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "names", "horiz", "border" );
-my $kImgWidth = 
+my $kImgWidth =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "img", "width" );
-my $kQueryLeft = 
+my $kQueryLeft =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "query", "left" );
-my $kQuerySpace = 
+my $kQuerySpace =
   Bio::GMOD::Blast::Graph::MyUtils::makeVariableName( "query", "space" );
 
 ###################################################################
@@ -62,7 +62,7 @@ sub recalc {
     $tmp = $imgLeftBorder;
     if( $pP ) { $tmp += $namesHorizBorder; }
     $self->{ $kQueryLeft } = $tmp;
-}   
+}
 
 ###################################################################
 sub putNamesP {
