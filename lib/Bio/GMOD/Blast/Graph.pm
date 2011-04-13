@@ -1,46 +1,16 @@
 package Bio::GMOD::Blast::Graph;
-
-=head1 NAME
-
-Bio::GMOD::Blast::Graph
-
-=head1 VERSIONS
-
-0.01 : Initial release
+# ABSTRACT: display a graphical summary of a BLAST report
 
 =head1 DESCRIPTION
 
-This package provides methods for graphically displaying the BLAST search result. 
-
-Originally created by John Slenk <jces@genome.stanford.edu>.
-
-Rewritten and cared for by Shuai Weng <shuai@genome.stanford.edu>.
-
-=head1 FEEDBACK
-
-=head2 Reporting Bugs
-
-Bug reports can be submitted via email 
-
-  shuai@genome.stanford.edu
-
-=head1 AUTHOR
-
-Shuai Weng, shuai@genome.stanford.edu
-
-John Slenk, jces@genome.stanford.edu
-
-=head1 APPENDIX
-
-The rest of the documentation details each of the public methods.
-
-=head1 PUBLIC METHODS
+This package provides methods for graphically displaying a BLAST
+search report.
 
 =cut
 
-# use strict;
+use strict;
 
-use base Bio::Root::IO;
+use base 'Bio::Root::IO';
 use Bio::SearchIO;
 use GD;
 use CGI qw/:all/;
@@ -63,18 +33,13 @@ use Bio::GMOD::Blast::Graph::MapDefs
        $kNumberOfPartitions $bucketBest $bucketZeroMax $bucketOneMax
        $bucketTwoMax $bucketThreeMax $bucketFourMax );
 
-our $ID = 'Bio::GMOD::Blast::Graph';
-our $VERSION = 0.01;
-
-use strict;
+our $ID = __PACKAGE__;
 
 ################################################################
 sub new {
 ################################################################
 
-=pod
-
-=head2 new
+=method new
 
 This is the constructor. It expects to be passed named arguments
 for the search outputfile, the file format (blast or fasta), the
@@ -82,7 +47,7 @@ image file path, and image url.
 
 Usage :
 
-    my $graph = 
+    my $graph =
       Bio::GMOD::Blast::Graph->new(-outputfile=>$blastOutputFile,
                                    -format=>'blast',
                                    -dstDir=>$imageDir,
@@ -107,9 +72,7 @@ Usage :
 sub showGraph {
 ##################################################################
 
-=pod
-
-=head2 showGraph
+=method showGraph
 
 This method prints the map to stdout (web browser).
 
@@ -130,9 +93,7 @@ Usage:
 sub getImageFile {
 ##################################################################
 
-=pod
-
-=head2 getImageFile
+=method getImageFile
 
 This method returns the newly created image file name (with full path).
 
@@ -153,9 +114,7 @@ Usage:
 sub hitNameArrayRef {
 ##################################################################
 
-=pod
-
-=head2 hitNameArrayRef
+=method hitNameArrayRef
 
 This method returns the array ref for the hit names.
 
