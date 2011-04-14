@@ -281,9 +281,6 @@ sub _parseFile {
     $self->{'_hitCountAfter'} =
     $self->{'_parts'}->getPartitionElementsCountAfter();
 
-    $self->_countHTML($self->{'_hitCountAfter'},
-              $self->{'_hitCountBefore'});
-
     if( $self->{'_hitCountAfter'} == $self->{'_hitCountBefore'} ) {
 
     $self->{'_allShowingP'} = 1;
@@ -304,6 +301,9 @@ sub _createAndShowGraph {
 # do the job.
 
     my ($self) = @_;
+
+    $self->_countHTML($self->{'_hitCountAfter'},
+              $self->{'_hitCountBefore'});
 
     $self->_initGD;
 
