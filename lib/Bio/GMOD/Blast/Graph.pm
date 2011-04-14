@@ -43,17 +43,21 @@ sub new {
 
 =method new
 
-This is the constructor. It expects to be passed named arguments
-for the search outputfile, the file format (blast or fasta), the
-image file path, and image url.
+This is the constructor. It expects to be passed named arguments for
+the search outputfile, the file format (blast or fasta), the image
+file path, and image url.  It can also accept an optional filehandle
+argument, which is the filehandle to which it will print its HTML
+output when L</showGraph> is called.  By default, prints to STDOUT.
 
 Usage :
 
-    my $graph =
-      Bio::GMOD::Blast::Graph->new(-outputfile=>$blastOutputFile,
-                                   -format=>'blast',
-                                   -dstDir=>$imageDir,
-                                   -dstURL=>$imageUrl);
+    my $graph = Bio::GMOD::Blast::Graph->new(
+        -outputfile => $blastOutputFile,
+        -format     => 'blast',
+        -dstDir     => $imageDir,
+        -dstURL     => $imageUrl
+        -fh         => \*STDOUT,
+        );
 
 =cut
 
