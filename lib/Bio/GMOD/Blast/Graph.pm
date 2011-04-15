@@ -1286,14 +1286,9 @@ sub _writeIMapStart {
 
     my ($self) = @_;
 
-    $self->_print( "<center>\n" );
+    $self->_print( '<center><form name="daform">' );
 
-    $self->_print( start_form({-name=>'daform'}).
-      textfield(-name=>'notes',
-            -size=>$self->{'_formFieldWidth'},
-            -value=>'Mouse-overs require JavaScript').p );
-
-    $self->_print( "<MAP NAME=".$self->{'_mapName'}.">\n" );
+    $self->_print( '<MAP NAME="' . $self->{'_mapName'} . '">' );
 
 }
 
@@ -1307,12 +1302,10 @@ sub _writeIMapEnd {
 
     $self->_print( "</MAP>\n" );
 
-    $self->_print( img({-src=>$self->{'_dstURL'}.$self->{'_imgName'},
-           -usemap=>"#".$self->{'_mapName'}}) );
+    my $img = sprintf '<img src="%s" usemap="#%s">', $self->{_dstURL} . $self->{_imgName}, $self->{_mapName};
+    $self->_print( $img );
 
-    $self->_print( end_form );
-
-    $self->_print( "</center>\n" )
+    $self->_print( '</form></center>' );
 
 }
 
