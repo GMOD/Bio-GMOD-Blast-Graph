@@ -13,7 +13,6 @@ use strict;
 use base 'Bio::Root::IO';
 use Bio::SearchIO;
 use GD;
-use CGI qw/:all/;
 
 use File::Spec;
 
