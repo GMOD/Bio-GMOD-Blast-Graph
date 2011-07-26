@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.05      2011-07-25 21:09:42 America/New_York
+
+ * add missing input field to silence javascript errors (leto)
+
 0.04      2011-04-15 15:08:14 America/Los_Angeles
 
  * remove use of CGI.pm
