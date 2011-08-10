@@ -1287,7 +1287,7 @@ sub _writeIMapStart {
 
     $self->_print( '<center><form name="daform">' );
 
-    $self->_print( '<input type="text" id="notes" value="" size="30"' );
+    $self->_print( '<input type="text" id="notes" value="" size="30">' );
 
     $self->_print( '<MAP NAME="' . $self->{'_mapName'} . '">' );
 
